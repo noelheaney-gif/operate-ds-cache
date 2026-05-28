@@ -41,9 +41,11 @@ https://raw.githubusercontent.com/noelheaney-gif/operate-ds-cache/main/list-view
 https://raw.githubusercontent.com/noelheaney-gif/operate-ds-cache/main/list-view.html
 ```
 
-**Truncation guard:** If any fetch returns fewer than 50 lines, STOP. Tell the PM: "The DS cache file [name] returned incomplete content. I cannot build this prototype safely without complete CSS — please check the GitHub repo." Do NOT proceed with approximated CSS.
+**Retry policy:** If any individual fetch fails or returns empty content, retry that file **up to 3 times** before treating it as a real failure. Most failures are transient (cold CDN cache, brief network hiccup) and the retry succeeds. Do not surface a one-off failure to the PM — only escalate after 3 attempts.
 
-**Missing repo guard:** If the GitHub repo doesn't exist yet, STOP. Tell the PM: "The DS cache repo hasn't been set up yet. Please follow the setup guide in the skill README before building prototypes." Do NOT proceed.
+**Truncation guard:** If a fetch returns fewer than 50 lines after a successful response (HTTP 200 with content), STOP. Tell the PM: "The DS cache file [name] returned incomplete content after 3 attempts. I cannot build this prototype safely without complete CSS — please check the GitHub repo." Do NOT proceed with approximated CSS.
+
+**Missing repo guard:** If the GitHub repo doesn't exist (404 on every file), STOP. Tell the PM: "The DS cache repo hasn't been set up yet. Please follow the setup guide in the skill README before building prototypes." Do NOT proceed.
 
 ---
 
