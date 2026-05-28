@@ -82,6 +82,33 @@ This is the most important rule in the skill. No exceptions.
 3. Style it using DS tokens only — never raw values.
 4. Flag the gap in the substitution summary so the DS team knows.
 
+---
+
+## ⚠️ PREVIEW URL CONVENTION — every link goes to the browser
+
+Any URL the skill surfaces — starter shell, hosted preview, per-component reference, anything the PM is meant to **open and look at** — must follow this format every time:
+
+> **Preview** → [Open in browser](https://operate-shell-components.netlify.app/starter.html?nav=tasks&title=Task%20Management)
+
+Rules:
+
+1. **Always label it `Preview`** in bold so the PM's eye picks it up instantly. Never bury a URL in a sentence.
+2. **Always wrap as a markdown link** with the text `Open in browser`. Cowork renders this as a clickable link.
+3. **Never try to inline-render** the URL via iframe, image, screenshot, or "look at this preview" inline panel. Those break, render badly, or take forever. The browser is the canvas.
+4. **One blank line before and after** so the link sits in its own visual block — easy to spot, easy to click.
+5. If multiple previews exist (e.g. a starter URL + a hosted prototype), list each on its own line with the same `**Preview** → [Open in browser](URL)` format, plus a short label after the closing bracket explaining what's at that URL.
+
+**Don't do this:**
+- ❌ Inline rendering of a URL ("here's a preview:" followed by an embed attempt)
+- ❌ Bare URL pasted in a sentence ("check out https://... for the shell")
+- ❌ Code-fenced URL (PMs can't click)
+- ❌ "Click here" link text — be specific about what they're opening
+
+**Do this instead:**
+- ✅ A clearly labelled, clickable markdown link on its own line that opens in the browser
+
+This applies to **every URL the skill ever returns** — Pass 1 starter shell, future hosted previews, references to the DS spec site, anything.
+
 **Why this rule exists:** Prototypes built from invented styling look "almost-Operate" — close enough to be confusing, wrong enough to mislead the PM and anyone they show it to. The whole point of this skill is that prototypes match the live DS exactly. Inventing breaks that contract.
 
 ---
@@ -253,13 +280,13 @@ If you can't tell, default to `dashboard`. Don't guess wrong.
 
 **URL-encode the title.** E.g. `Task Management` → `Task%20Management`. `Matter Dashboard — Q3` → `Matter%20Dashboard%20%E2%80%94%20Q3`.
 
-**Pass 1 output is just this one message** — no artifact, no HTML, no CSS:
+**Pass 1 output is just this one message** — no artifact, no HTML, no CSS. Follow the **Preview URL convention** above exactly:
 
-> Got your screenshot. Starter shell ready:
-> https://operate-shell-components.netlify.app/starter.html?nav=tasks&title=Task%20Management
+> Got your screenshot. Side nav set to **Tasks**, title set to **Task Management**.
 >
-> Click to see the shell load instantly. Side nav set to **Tasks**, title set to **Task Management**.
-> Building the content area now — anything wrong about the framing?
+> **Preview** → [Open in browser](https://operate-shell-components.netlify.app/starter.html?nav=tasks&title=Task%20Management)
+>
+> Anything wrong about the framing before I build the content area?
 
 Then **stop and wait** for the PM's reply. End the turn.
 
