@@ -225,13 +225,221 @@ You only need three things to ship Pass 1:
 
 Don't try to read columns, data, widgets, or interactions yet. That's Pass 2.
 
-### Step 2 — Pass 1: Ship the shell (target: under 30 seconds from PM message → artifact)
+### Step 2 — Pass 1: Ship the starter shell (target: under 30 seconds from PM message → artifact)
 
-Output a complete self-contained HTML artifact with:
-- `top-nav.html` verbatim
-- `sidebar.html` verbatim — only change is the `active` class on the right item
-- `page-header.html` verbatim — only change is the title text
-- An empty `<main>` content area with one short placeholder line: *"Building the [matter list | task screen | dashboard] content next…"*
+**Do not fetch top-nav.html, sidebar.html, or page-header.html for Pass 1.** The full starter shell is embedded literally in this skill — below. Copy it into your artifact verbatim. Do exactly two substitutions:
+
+1. **Active sidebar item** — by default `My Dashboard` has `class="sidebar-item active"`. Move the `active` class to whichever item matches the screenshot:
+   - Dashboard / overview screen → `My Dashboard`
+   - Matter list / matter management → `Matters`
+   - Task list / task management → `Tasks`
+   - Litigation / cases → `Litigations`
+   - Time entry → `My Time`
+   - Calendar → `My Calendar`
+   - Inbox / mail → `Post Room`
+   - Analytics / reports → `Reports`
+   - New intake → `New Business`
+   - If you can't tell, default to `My Dashboard` (don't guess wrong)
+
+2. **Page title** — the default text is `Matter Dashboard`. Replace with the title from the screenshot or PM brief.
+
+**No other changes to the shell in Pass 1.** No restyling. No reordering nav items. No removing items. No adding items. No changing the user block. No changing the footer.
+
+#### The starter shell — copy this entire block verbatim into your artifact
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[PAGE TITLE] — Operate Prototype</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <style>
+    /* PASTE tokens.css HERE — from the cache repo */
+    /* PASTE top-nav.css HERE — from the cache repo */
+    /* PASTE sidebar.css HERE — from the cache repo */
+    /* PASTE page-header.css HERE — from the cache repo */
+    /* PASTE widget-shell.css HERE — from the cache repo */
+
+    /* Page content canvas — masonry */
+    .op-frame-canvas {
+      padding: 24px;
+      column-count: 3;
+      column-gap: 16px;
+    }
+    @media (max-width: 900px) { .op-frame-canvas { column-count: 2; } }
+    @media (max-width: 600px) { .op-frame-canvas { column-count: 1; } }
+    .op-frame-widget {
+      background: var(--surface-raised);
+      border-radius: 8px;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 16px;
+      min-height: 200px;
+      break-inside: avoid;
+    }
+  </style>
+</head>
+<body>
+<!-- PROTOTYPE NOTES
+  Pass 1 — Starter shell. Active sidebar: [WHICH ITEM]. Page title: [TITLE].
+  Pass 2 will fill the content area.
+-->
+
+<!-- Top Nav — verbatim from the DS, never modify -->
+<nav class="top-nav">
+  <a class="top-nav-logo" href="#">
+    <img src="https://operate-shell-components.netlify.app/portal-brand-logo.png" alt="Clio Operate">
+  </a>
+  <div class="top-nav-search">
+    <div class="top-nav-search-scope">
+      <i class="fas fa-search"></i>
+      <i class="fas fa-chevron-down chevron"></i>
+    </div>
+    <input type="text" placeholder="Search all cases...">
+  </div>
+  <div class="top-nav-actions">
+    <div class="has-tooltip">
+      <button class="top-nav-icon-btn"><i class="fas fa-plus"></i></button>
+      <span class="tooltip">New Business</span>
+    </div>
+    <div class="has-tooltip">
+      <button class="top-nav-icon-btn"><i class="fas fa-bookmark"></i></button>
+      <span class="tooltip">My Cases</span>
+    </div>
+    <div class="has-tooltip">
+      <button class="top-nav-icon-btn"><i class="fas fa-cog"></i></button>
+      <span class="tooltip">Admin</span>
+    </div>
+    <div class="has-tooltip">
+      <button class="top-nav-icon-btn"><i class="fas fa-clock"></i></button>
+      <span class="tooltip">Time</span>
+    </div>
+    <div class="has-tooltip">
+      <button class="top-nav-icon-btn">
+        <i class="fas fa-bell"></i>
+        <span class="op-badge op-badge--danger" data-count="3"></span>
+      </button>
+      <span class="tooltip">Notifications</span>
+    </div>
+  </div>
+</nav>
+
+<!-- Side Nav — verbatim from the DS. ONLY change the `active` class location. -->
+<aside class="sidebar">
+  <div class="sidebar-nav">
+    <div class="sidebar-user">
+      <div class="sidebar-user-btns">
+        <button class="sidebar-user-btn">
+          <span class="sub-abbr">M</span>
+          <span class="sub-label">My Matters</span>
+          <span class="sub-count">12</span>
+          <span class="tooltip">My Matters (12)</span>
+        </button>
+        <button class="sidebar-user-btn">
+          <span class="sub-abbr">T</span>
+          <span class="sub-label">My Tasks</span>
+          <span class="sub-count">19</span>
+          <span class="tooltip">My Tasks (19)</span>
+        </button>
+      </div>
+    </div>
+
+    <a class="sidebar-item active" href="#">
+      <i class="fas fa-tachometer-alt"></i>
+      <span class="sidebar-item-label">My Dashboard</span>
+      <span class="tooltip">My Dashboard</span>
+    </a>
+    <a class="sidebar-item" href="#">
+      <i class="fas fa-inbox"></i>
+      <span class="sidebar-item-label">New Business</span>
+      <span class="sidebar-item-count">4</span>
+      <span class="tooltip">New Business</span>
+    </a>
+    <a class="sidebar-item" href="#">
+      <i class="fas fa-briefcase"></i>
+      <span class="sidebar-item-label">Matters</span>
+      <span class="sidebar-item-count">12</span>
+      <span class="tooltip">Matters</span>
+    </a>
+    <a class="sidebar-item" href="#">
+      <i class="fas fa-list-ul"></i>
+      <span class="sidebar-item-label">Tasks</span>
+      <span class="sidebar-item-count">19</span>
+      <span class="tooltip">Tasks</span>
+    </a>
+    <a class="sidebar-item" href="#">
+      <i class="fas fa-balance-scale"></i>
+      <span class="sidebar-item-label">Litigations</span>
+      <span class="sidebar-item-count">7</span>
+      <span class="tooltip">Litigations</span>
+    </a>
+    <a class="sidebar-item" href="#">
+      <i class="fas fa-clock"></i>
+      <span class="sidebar-item-label">My Time</span>
+      <span class="tooltip">My Time</span>
+    </a>
+    <a class="sidebar-item" href="#">
+      <i class="fas fa-calendar-alt"></i>
+      <span class="sidebar-item-label">My Calendar</span>
+      <span class="tooltip">My Calendar</span>
+    </a>
+    <a class="sidebar-item" href="#">
+      <i class="fas fa-inbox"></i>
+      <span class="sidebar-item-label">Post Room</span>
+      <span class="tooltip">Post Room</span>
+    </a>
+    <a class="sidebar-item" href="#">
+      <i class="fas fa-chart-bar"></i>
+      <span class="sidebar-item-label">Reports</span>
+      <span class="tooltip">Reports</span>
+    </a>
+  </div>
+
+  <div class="sidebar-footer">
+    <a class="sf-item" href="#">
+      <span class="sf-icon-wrap"><i class="fas fa-question"></i></span>
+      <span class="sf-text">Help</span>
+      <span class="tooltip">Help</span>
+    </a>
+    <a class="sf-item" href="#">
+      <span class="sf-avatar-img">
+        <img src="https://operate-shell-components.netlify.app/emily-carl-avatar.jpg" alt="Emily Carl">
+        <span class="sf-status-dot"></span>
+      </span>
+      <span class="sf-text">Emily Carl</span>
+      <span class="tooltip">Emily Carl</span>
+    </a>
+    <button class="sf-item" data-sidebar-toggle>
+      <span class="sf-icon-wrap"><i class="fas fa-chevron-left" data-sidebar-toggle-icon></i></span>
+      <span class="sf-text sf-collapse-label" data-sidebar-toggle-label>Collapse</span>
+      <span class="tooltip" data-sidebar-toggle-tooltip>Collapse</span>
+    </button>
+  </div>
+</aside>
+
+<!-- Main content area -->
+<main class="app-shell">
+  <!-- Page Header — ONLY change the h1 text -->
+  <header class="op-page-header">
+    <h1 class="op-page-header-title">Matter Dashboard</h1>
+  </header>
+
+  <!-- Page Content — Pass 2 fills this in. For Pass 1, leave the canvas with 3 empty placeholder cards -->
+  <div class="op-frame-canvas">
+    <div class="op-frame-widget"></div>
+    <div class="op-frame-widget"></div>
+    <div class="op-frame-widget"></div>
+  </div>
+</main>
+
+</body>
+</html>
+```
+
+**You still need to fetch the CSS** (tokens.css, top-nav.css, sidebar.css, page-header.css, widget-shell.css) and paste them verbatim into the `<style>` block at the comment markers. The HTML structure above is fixed and embedded — no fetching needed for the markup.
 
 **Close Pass 1 with:**
 > "Here's the shell. Side nav set to **[X]**, title set to **[Y]**. Building the content area now — anything wrong about the framing before I do?"
