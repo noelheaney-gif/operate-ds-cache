@@ -488,20 +488,41 @@ Then **stop and wait** for the PM's reply. End the turn.
 
 This is the PM's chance to redirect on the sidebar selection or title in under 5 seconds, before you spend time on content.
 
-### Step 3 — Plan the content area aloud
+### Step 3 — Pass 1.5: Read back the plan + set a time expectation (END TURN)
 
-Name every component going into the content area. For list views, list every column explicitly:
+After the PM confirms the framing (or course-corrects on nav / title), your next response is **NOT the artifact**. It's a short readback that:
 
-```
-Content area:
-  Widget 1: Radar (separate, collapsed by default)
-  Widget 2: List View (separate, independent)
-    → Tab switcher: My Active | Team Active | Approvals - For Me (active) | ...
-    → Columns: ☑ | 🚩 | Due | Reference | Requested By | Client | Work Item | Type | Matter | Phase | Action
-    → Rows: realistic placeholder data from screenshot
-```
+1. **Confirms what you heard** from the PM (the framing they validated, plus any corrections).
+2. **Names every component you're going to put in the content area** — for list views, list every column explicitly. This is the PM's last chance to redirect cheaply.
+3. **Sets a realistic time estimate** so the PM knows what they're waiting for.
 
-This is your last chance for the PM to correct columns before HTML is written.
+**Template:**
+
+> Got it — building **[page title]** with sidebar on **[active nav item]**.
+>
+> Content area will have:
+> - Widget 1: **Roll Up Card row** (4 cards: Active / Overdue / Completed / Approvals)
+> - Widget 2: **List View** (separate, independent)
+>   → Tab switcher: My Active | Team Active | Approvals (active)
+>   → Columns: ☑ | Reference | Client | Work Item | Type | Matter | Phase | Action
+>   → 8 rows of realistic placeholder data
+>
+> Faking the filter toggle and the "New Task" button (visual only).
+>
+> Should take **~90 seconds** to generate. Say **go** to build, or tell me what to change first.
+
+Then **end the turn.** Wait for the PM's "go" (or correction). This is the build's contract — once the PM says go, you commit to the plan.
+
+**Time-estimate rules of thumb** — be honest, not optimistic:
+
+| Content scope | Realistic estimate |
+|---|---|
+| 1 widget (roll-up cards only, or just a list view) | 30–60 seconds |
+| Standard screen (roll-up row + list view) | 1–2 minutes |
+| Complex screen (multi-widget dashboard, tab switcher, dialogs) | 2–4 minutes |
+| Adding interactions on top (working filter, modal, tab switch) | +30s per interaction |
+
+If you're not sure, round up. Under-promising and over-delivering beats the reverse.
 
 ### Step 4 — Pass 2: Fill the content area (update the Pass 1 artifact in place)
 
