@@ -272,7 +272,28 @@ Content requirements:
 - Desktop width (1280px) unless asked otherwise
 - Update the `<!-- PROTOTYPE NOTES -->` block at top to list: DS files used, what was upgraded, what is faked
 
-### Step 5 — Substitution summary
+### Step 5 — VERIFY against the source — do not skip
+
+Before declaring Pass 1 or Pass 2 complete, **re-read each cache file you used and confirm your output matches it character-for-character.** Do not paraphrase. Do not "improve." Do not reword. If you wrote `<button class="op-btn op-btn--primary">Save</button>` but the cache file shows `<button type="button" class="op-btn op-btn--primary">Save</button>`, that's drift — fix it.
+
+**For each cache file you pasted from, run this check:**
+
+1. Re-fetch the file from `https://raw.githubusercontent.com/noelheaney-gif/operate-ds-cache/main/<filename>` (or re-read it from your fetched cache for this turn).
+2. Identify the block in your output that corresponds to that file.
+3. Compare the two. If there is ANY difference beyond the explicitly allowed customisations (`active` class on sidebar, page title text, notification badge count), replace your output with the source verbatim.
+4. If you can't run the check (fetch failed, file unavailable), say so explicitly to the PM: *"I couldn't verify the [X] block against the source — please double-check it in the live spec."*
+
+**Explicitly allowed deviations** — these are the only changes you may make to fetched content:
+- `sidebar.html`: `active` class on one nav item only
+- `sidebar.html`: My Matters / My Tasks count numbers
+- `page-header.html`: title text only
+- `top-nav.html`: notification badge count number only
+- `list-view.html`: row data (text, dates, counts), column headers (per PM brief), active tab class
+- Everything else: **verbatim**
+
+If verification finds drift, fix it silently — don't tell the PM "I had to correct my own output." Just ship the corrected version.
+
+### Step 6 — Substitution summary
 
 After the Pass 2 update, write a plain-English summary:
 > "Content area filled in. I replaced the old [X] with the DS [Y]. Radar and List View are built as two independent widgets. The tab switcher uses the DS context-switcher pattern. I faked [Z] — let me know if you need it to actually work."
