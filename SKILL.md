@@ -553,22 +553,55 @@ If you're not sure, round up. Under-promising and over-delivering beats the reve
 
 ### Step 4 — Pass 2: Fill the content area (update the Pass 1 artifact in place)
 
-**Update the existing artifact** — don't create a second one. The PM should see the same prototype now filled in, not two separate prototypes.
+**Default path: pick a pre-built layout URL — no artifact generation, no waiting.**
 
-Pass 2 keeps:
-- Top nav (unchanged)
-- Side nav (unchanged from Pass 1 — same active item)
-- Page header (unchanged from Pass 1 — same title)
+The starter page accepts a `layout` query param. Five canonical layouts are pre-built and hosted — they render instantly in the browser when the PM clicks. Use these for **90% of prototypes**.
 
-Pass 2 replaces:
-- The `<main>` placeholder with the full content area: widgets, list views, dialogs, etc.
+| Layout key | Renders | Use when |
+|---|---|---|
+| `rollup-only` | 4 Roll Up Cards row | Screen is just a row of KPI cards |
+| `list-only` | Full-page List View | Screen is just a worklist or matter list |
+| `radar+list` | Radar (collapsed) + List View | Task or matter screen with radar at top |
+| `rollup+list` | 4 Roll Up Cards + List View | Most common — cards then list |
+| `rollup+radar+list` | Cards + Radar + List View | Full dashboard pattern |
 
-Content requirements:
-- All CSS inline in `<style>` — pasted verbatim from fetched files, no approximations
+**Pass 2 URL format** (note: `+` in layout key must be URL-encoded as `%2B`):
+
+```
+https://operate-shell-components.netlify.app/starter.html
+  ?nav=<nav-key>
+  &title=<url-encoded-title>
+  &layout=<layout-key>
+```
+
+**Pass 2 output is just this one message** (no artifact for the default path):
+
+> **Preview** → [Open in browser](https://operate-shell-components.netlify.app/starter.html?nav=tasks&title=Task%20Management&layout=radar%2Blist)
+>
+> Built with: Radar (collapsed by default) + List View. Sidebar on **Tasks**, title **Task Management**.
+>
+> Want me to adjust anything — different layout, different active tab, real column names from the screenshot?
+
+Then end the turn.
+
+---
+
+#### Fallback: artifact generation for bespoke content
+
+Use this **only** when the prototype needs content that doesn't fit one of the five pre-built layouts (e.g., a one-off custom widget, a screen with a unique structure, a brand-new pattern the DS hasn't shipped yet).
+
+**Tell the PM honestly:**
+
+> The shape of this screen doesn't match a pre-built layout — I'll have to generate it from scratch, which takes ~2–4 minutes. Want to proceed, or could we adapt to one of the standard layouts (rollup+list, radar+list, etc.)?
+
+Wait for the PM's "yes, generate" before starting. If they confirm, generate a full self-contained HTML artifact:
+- All CSS inline in `<style>` — pasted verbatim from fetched cache files, no approximations
 - Realistic placeholder data — real names, dates, matter numbers
 - Interactive where described — JS for tab switching, dropdowns, filter toggles
 - Desktop width (1280px) unless asked otherwise
-- Update the `<!-- PROTOTYPE NOTES -->` block at top to list: DS files used, what was upgraded, what is faked
+- `<!-- PROTOTYPE NOTES -->` block listing: DS files used, what was upgraded, what is faked
+
+The artifact path is slow because Cowork generates HTML character by character. Acceptable for one-off bespoke screens; **never** the default for screens that fit a pre-built layout.
 
 ### Step 5 — VERIFY against the source — do not skip
 
