@@ -49,6 +49,31 @@ https://raw.githubusercontent.com/noelheaney-gif/operate-ds-cache/main/list-view
 
 ---
 
+## ⚠️ NEVER DESIGN ON THE SPOT — EVERYTHING COMES FROM THE DS
+
+This is the most important rule in the skill. No exceptions.
+
+**Every visual decision** — colour, typography, spacing, shadow, border radius, component layout, hover state, focus ring, padding, gap, icon size — **must come from the DS**. From a token in `tokens.css`, from a component file in this cache repo, or from a documented pattern in the rules files.
+
+**You may not:**
+- Invent CSS values (no raw hex, no raw px, no raw shadows, no Tailwind)
+- Approximate component HTML from memory (no "I think the list view looks like…")
+- Adapt a component to "look better" or "match the screenshot more closely"
+- Design a new component because the screenshot has something the DS doesn't yet
+- Style anything based on what looks good — only on what the DS prescribes
+
+**The only exception:** content the DS has nothing to say about (a chart's data values, the text in a placeholder row, the count on a badge). That's content — not design.
+
+**If the screenshot shows something the DS doesn't have:**
+1. Say so explicitly: *"The DS doesn't have [X] yet."*
+2. Use the closest available DS component to express the intent.
+3. Style it using DS tokens only — never raw values.
+4. Flag the gap in the substitution summary so the DS team knows.
+
+**Why this rule exists:** Prototypes built from invented styling look "almost-Operate" — close enough to be confusing, wrong enough to mislead the PM and anyone they show it to. The whole point of this skill is that prototypes match the live DS exactly. Inventing breaks that contract.
+
+---
+
 ## DEFAULT PERSONA — never override from screenshots
 
 **Always use Emily Carl, not the user in the screenshot.**
