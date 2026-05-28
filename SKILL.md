@@ -161,45 +161,78 @@ Build the `<style>` block in this order, copying each file verbatim:
 
 ---
 
-## How to run a prototype session
+## How to run a prototype session — TWO-PASS BUILD
+
+The shell is solved. Ship it first so the PM sees something within 30 seconds, then fill the content area. This is **not optional** — single-pass builds make the PM wait silently for 2+ minutes wondering if anything is happening. Two-pass keeps them in the loop and lets them course-correct on side-nav / title before you spend time on content.
 
 ### Step 0 — Fetch DS files (see startup sequence above)
 
-### Step 1 — Understand what the PM is testing
-Infer from the screenshot + description:
-1. What screen / flow?
-2. What data — use realistic placeholder data unless PM provides specifics
-3. What interactions — dialogs, filter toggles, tab switches?
+### Step 1 — Read the screenshot in 10 seconds, no more
 
-### Step 2 — Plan aloud before building
+You only need three things to ship Pass 1:
+1. **Which sidebar item is active?** (Matters → "Matters", Tasks → "Tasks", Dashboard → "My Dashboard", etc.) — read it from the screenshot's left rail or infer from the screen's purpose.
+2. **What's the page title?** Read the H1 in the screenshot, or use the PM's description.
+3. **Is this a dashboard, list, or detail screen?** (Affects the page-content scaffold only — doesn't change the shell.)
 
-Name every component you'll use. When a list view is involved, list every column explicitly:
+Don't try to read columns, data, widgets, or interactions yet. That's Pass 2.
+
+### Step 2 — Pass 1: Ship the shell (target: under 30 seconds from PM message → artifact)
+
+Output a complete self-contained HTML artifact with:
+- `top-nav.html` verbatim
+- `sidebar.html` verbatim — only change is the `active` class on the right item
+- `page-header.html` verbatim — only change is the title text
+- An empty `<main>` content area with one short placeholder line: *"Building the [matter list | task screen | dashboard] content next…"*
+
+**Close Pass 1 with:**
+> "Here's the shell. Side nav set to **[X]**, title set to **[Y]**. Building the content area now — anything wrong about the framing before I do?"
+
+This is the PM's chance to redirect on the sidebar selection or title in under 5 seconds, before you spend time on content.
+
+### Step 3 — Plan the content area aloud
+
+Name every component going into the content area. For list views, list every column explicitly:
 
 ```
-Shell: top-nav.html + sidebar.html (active: Task Management)
-Page header: page-header.html — title "Task Management"
-Widget 1: Radar (separate, collapsed by default)
-Widget 2: List View (separate, independent)
-  → Tab switcher: My Active | Team Active | Approvals - For Me (active) | ...
-  → Columns: ☑ | 🚩 | Due | Reference | Requested By | Client | Work Item | Type | Matter | Phase | Action
-  → Rows: realistic placeholder data from screenshot
+Content area:
+  Widget 1: Radar (separate, collapsed by default)
+  Widget 2: List View (separate, independent)
+    → Tab switcher: My Active | Team Active | Approvals - For Me (active) | ...
+    → Columns: ☑ | 🚩 | Due | Reference | Requested By | Client | Work Item | Type | Matter | Phase | Action
+    → Rows: realistic placeholder data from screenshot
 ```
 
-This lets the PM correct columns or layout before you write HTML.
+This is your last chance for the PM to correct columns before HTML is written.
 
-### Step 3 — Build and output
+### Step 4 — Pass 2: Fill the content area (update the Pass 1 artifact in place)
 
-Single self-contained HTML file:
+**Update the existing artifact** — don't create a second one. The PM should see the same prototype now filled in, not two separate prototypes.
+
+Pass 2 keeps:
+- Top nav (unchanged)
+- Side nav (unchanged from Pass 1 — same active item)
+- Page header (unchanged from Pass 1 — same title)
+
+Pass 2 replaces:
+- The `<main>` placeholder with the full content area: widgets, list views, dialogs, etc.
+
+Content requirements:
 - All CSS inline in `<style>` — pasted verbatim from fetched files, no approximations
 - Realistic placeholder data — real names, dates, matter numbers
 - Interactive where described — JS for tab switching, dropdowns, filter toggles
 - Desktop width (1280px) unless asked otherwise
-- `<!-- PROTOTYPE NOTES -->` block at top listing: DS files used, what was upgraded, what is faked
+- Update the `<!-- PROTOTYPE NOTES -->` block at top to list: DS files used, what was upgraded, what is faked
 
-### Step 4 — Substitution summary
+### Step 5 — Substitution summary
 
-After the file, write a plain-English summary:
-> "I replaced the old [X] with the DS [Y]. Radar and List View are built as two independent widgets. The tab switcher uses the DS context-switcher pattern. I faked [Z] — let me know if you need it to actually work."
+After the Pass 2 update, write a plain-English summary:
+> "Content area filled in. I replaced the old [X] with the DS [Y]. Radar and List View are built as two independent widgets. The tab switcher uses the DS context-switcher pattern. I faked [Z] — let me know if you need it to actually work."
+
+---
+
+## When to skip Pass 1
+
+Only one case: the PM explicitly asks for a single-shot output (e.g. "just give me the final HTML, don't iterate"). Otherwise always two-pass.
 
 ---
 
