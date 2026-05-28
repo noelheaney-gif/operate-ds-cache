@@ -1,0 +1,115 @@
+/* ============================================================
+   OPERATE DS — TOKEN BLOCK
+   Source: operate-shell-components.netlify.app/llms.txt
+   Status: ✅ Verified from llms.txt (2026-05-28)
+   ============================================================ */
+:root {
+  --font-body: 'Inter', 'Segoe UI', Arial, sans-serif;
+  --neutral-50:  #FAFAFA;
+  --neutral-100: #F7F7F7;
+  --neutral-200: #EAEFF4;
+  --neutral-300: #D5DDE5;
+  --neutral-400: #B8C4CE;
+  --neutral-500: #8895A7;
+  --neutral-600: #606F7B;
+  --neutral-700: #4A5568;
+  --neutral-800: #323841;
+  --neutral-900: #1F2329;
+
+  --font-size-xs:   11px;
+  --font-size-sm:   12px;
+  --font-size-base: 14px;
+  --font-size-md:   16px;
+  --font-size-lg:   20px;
+  --font-size-xl:   24px;
+  --font-size-2xl:  32px;
+
+  --font-weight-light:    300;
+  --font-weight-regular:  400;
+  --font-weight-medium:   500;
+  --font-weight-semibold: 600;
+  --font-weight-bold:     700;
+
+  --line-height-none:    1;
+  --line-height-tight:   1.2;
+  --line-height-normal:  1.45;
+  --line-height-relaxed: 1.6;
+
+  --space-1:  4px;  --space-2:  8px;  --space-3:  12px; --space-4:  16px;
+  --space-5:  20px; --space-6:  24px; --space-8:  32px; --space-10: 40px;
+
+  --blue-50:  #E8F1F8; --blue-100: #C5DCF0; --blue-300: #5AAEE5;
+  --blue-500: #1D6396; --blue-600: #054F7E; --blue-700: #02446B;
+  --red-50:   #FCEAEC; --red-500:  #D63343; --red-700:  #9A1F2C;
+  --green-50: #E8F5EC; --green-500: #27A243; --green-700: #1A7430;
+  --amber-50: #FFF7E0; --amber-500: #E09D15; --amber-700: #A06D00;
+
+  /* Semantic — Text */
+  --text-primary:        var(--neutral-900);
+  --text-secondary:      var(--neutral-700);
+  --text-tertiary:       var(--neutral-600);
+  --text-disabled:       var(--neutral-500);
+  --text-inverse:        #FFFFFF;
+  --text-brand:          var(--blue-500);
+  --text-link:           var(--blue-500);
+  --text-danger:         var(--red-700);
+  --text-success:        var(--green-700);
+  --text-warning:        var(--amber-700);
+  --text-accent-on-dark: var(--blue-300);
+
+  /* Semantic — Surfaces */
+  --surface-page:         var(--neutral-100);
+  --surface-raised:       #FFFFFF;
+  --surface-sunken:       var(--neutral-200);
+  --surface-brand:        var(--blue-600);
+  --surface-brand-subtle: var(--blue-50);
+
+  /* Semantic — Borders */
+  --border-default: var(--neutral-300);
+  --border-subtle:  var(--neutral-200);
+  --border-strong:  var(--neutral-400);
+  --border-focus:   var(--blue-500);
+  --border-danger:  var(--red-500);
+
+  /* Semantic — Actions */
+  --action-primary:       var(--blue-600);
+  --action-primary-hover: var(--blue-500);
+  --action-danger:        var(--red-500);
+  --action-danger-hover:  var(--red-700);
+  --action-disabled-bg:   var(--neutral-200);
+  --action-disabled-fg:   var(--neutral-500);
+
+  /* Semantic — States */
+  --state-info-bg:    var(--blue-50);    --state-info-fg:    var(--blue-600);
+  --state-success-bg: var(--green-50);   --state-success-fg: var(--green-700);
+  --state-warning-bg: var(--amber-50);   --state-warning-fg: var(--amber-700);
+  --state-danger-bg:  var(--red-50);     --state-danger-fg:  var(--red-700);
+
+  /* Elevation */
+  --shadow-card:    0 4px 8px 0 rgba(81,101,120,0.10), 0 1px 3px 0 rgba(60,78,98,0.06);
+  --shadow-card-sm: 0 1px 2px 0 rgba(81,101,120,0.10), 0 1px 1px 0 rgba(60,78,98,0.04);
+  --shadow-tooltip: 0 4px 8px 0 rgba(81,101,120,0.16), 0 1px 3px 0 rgba(60,78,98,0.08);
+
+  /* Sidebar overlays */
+  --text-inverse-soft:    rgba(255,255,255,0.85);
+  --text-inverse-muted:   rgba(255,255,255,0.6);
+  --overlay-hover-dark:   rgba(255,255,255,0.08);
+  --overlay-divider-dark: rgba(255,255,255,0.07);
+
+  /* Shell dimensions */
+  --topnav-height:           56px;
+  --sidebar-width:           250px;
+  --sidebar-collapsed-width: 52px;
+}
+
+/* Base reset */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  height: 100%;
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  background: var(--surface-page);
+}
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }

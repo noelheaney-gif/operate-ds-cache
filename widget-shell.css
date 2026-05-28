@@ -1,0 +1,89 @@
+/* ============================================================
+   OPERATE DS — WIDGET SHELL CSS
+   Covers the collapsible widget container used by:
+   - Radar (always ships collapsed)
+   - List View (ships expanded)
+   These are TWO SEPARATE INDEPENDENT widgets. Never nest one inside the other.
+   Status: ⚠️ Needs Chrome verification
+   ============================================================ */
+
+.op-widget {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-card-sm);
+  margin-bottom: var(--space-4);
+}
+
+/* Widget header — dark bar, full-width click target */
+.op-widget-header {
+  display: flex;
+  align-items: center;
+  background: var(--neutral-700);
+  padding: 0 var(--space-4);
+  min-height: 40px;
+  cursor: pointer;
+  user-select: none;
+  gap: var(--space-2);
+  transition: background 0.15s;
+}
+.op-widget-header:hover { background: var(--neutral-600); }
+
+.op-widget-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-inverse);
+  flex: 1;
+}
+
+/* Header action buttons (Refresh, Filter, etc) — click must NOT collapse widget */
+.op-widget-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.op-widget-header-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-inverse-muted);
+  font-size: var(--font-size-sm);
+  transition: background 0.15s, color 0.15s;
+}
+.op-widget-header-btn:hover {
+  background: var(--overlay-hover-dark);
+  color: var(--text-inverse);
+}
+
+/* Chevron — only this collapses when widget is expanded */
+.op-widget-chevron {
+  color: var(--text-inverse-muted);
+  font-size: var(--font-size-sm);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+/* Collapsed state — body hidden, chevron points down */
+.op-widget .op-widget-body { display: none; }
+.op-widget.is-collapsed .op-widget-chevron { transform: rotate(0deg); }
+
+/* Expanded state — body visible, chevron points up */
+.op-widget.is-expanded .op-widget-body { display: block; }
+.op-widget.is-expanded .op-widget-chevron { transform: rotate(180deg); }
+
+/* Radar ships collapsed — add is-collapsed class by default */
+/* List View ships expanded — add is-expanded class by default */
+
+/* Widget body */
+.op-widget-body {
+  background: var(--surface-raised);
+}
+
+/* Page layout — content padding */
+.page-content {
+  padding: var(--space-6);
+}

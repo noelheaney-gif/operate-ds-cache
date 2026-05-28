@@ -1,0 +1,224 @@
+/* ============================================================
+   OPERATE DS — SIDE NAVIGATION CSS
+   Source: operate-shell-components.netlify.app/#side-nav
+   Status: ⚠️ Needs Chrome verification against live DS
+   TODO: Connect Chrome and verify every value below against
+         the rendered component at operate-shell-components.netlify.app/#side-nav
+   ============================================================ */
+
+.sidebar {
+  position: fixed;
+  top: var(--topnav-height);
+  left: 0;
+  bottom: 0;
+  width: var(--sidebar-width);
+  background: var(--neutral-800);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow: hidden;
+  transition: width 0.2s ease;
+}
+
+/* Collapsed state — verbatim from DS */
+.sidebar.collapsed { width: var(--sidebar-collapsed-width); }
+.sidebar.collapsed .sidebar-user { padding: 14px 6px 12px; }
+.sidebar.collapsed .sidebar-user-btns { align-items: center; }
+.sidebar.collapsed .sidebar-user-btn { justify-content: center; gap: 0; padding: 0; }
+.sidebar.collapsed .sub-abbr { display: inline; }
+.sidebar.collapsed .sub-label,
+.sidebar.collapsed .sub-count { display: none; }
+.sidebar.collapsed .sidebar-item { justify-content: center; padding: 10px 0; margin: 3px 8px; gap: 0; }
+.sidebar.collapsed .sidebar-item-label,
+.sidebar.collapsed .sidebar-item-count { display: none; }
+.sidebar.collapsed .sidebar-item i { width: auto; }
+.sidebar.collapsed .sf-item { justify-content: center; gap: 0; }
+.sidebar.collapsed .sf-text { display: none; }
+
+/* Nav scroll area */
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-2) 0;
+}
+.sidebar-nav::-webkit-scrollbar { width: 4px; }
+.sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+.sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+
+/* User buttons block */
+.sidebar-user {
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--overlay-divider-dark);
+  margin-bottom: var(--space-1);
+}
+.sidebar-user-btns {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.sidebar-user-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: 6px;
+  color: var(--text-inverse-soft);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  transition: background 0.15s;
+  position: relative;
+  width: 100%;
+}
+.sidebar-user-btn:hover {
+  background: var(--overlay-hover-dark);
+  color: var(--text-inverse);
+}
+.sub-abbr {
+  display: none;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  background: rgba(255,255,255,0.15);
+  border-radius: 4px;
+  padding: 2px 5px;
+  min-width: 20px;
+  text-align: center;
+}
+.sub-label { flex: 1; text-align: left; }
+.sub-count {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  background: rgba(255,255,255,0.15);
+  border-radius: 10px;
+  padding: 2px 7px;
+  min-width: 26px;
+  text-align: center;
+}
+
+/* Nav items */
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  margin: 2px var(--space-2);
+  border-radius: 6px;
+  color: var(--text-inverse-soft);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  transition: background 0.15s, color 0.15s;
+  position: relative;
+  cursor: pointer;
+}
+.sidebar-item i {
+  width: 16px;
+  text-align: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.sidebar-item:hover {
+  background: var(--overlay-hover-dark);
+  color: var(--text-inverse);
+}
+.sidebar-item.active {
+  background: rgba(255,255,255,0.14);
+  color: var(--text-inverse);
+}
+.sidebar-item-label { flex: 1; }
+.sidebar-item-count {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-inverse-muted);
+  background: rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 2px 7px;
+  min-width: 26px;
+  text-align: center;
+}
+.sidebar-item.active .sidebar-item-count {
+  color: var(--text-inverse);
+  background: rgba(255,255,255,0.18);
+}
+
+/* Sidebar tooltips (shown when collapsed) */
+.sidebar-item .tooltip,
+.sf-item .tooltip {
+  position: absolute;
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--neutral-900);
+  color: #fff;
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+  padding: 4px 8px;
+  border-radius: 4px;
+  box-shadow: var(--shadow-tooltip);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 500;
+}
+.sidebar.collapsed .sidebar-item:hover .tooltip,
+.sidebar.collapsed .sf-item:hover .tooltip { opacity: 1; }
+
+/* Footer — fixed order: Help → User → Collapse */
+.sidebar-footer {
+  border-top: 1px solid var(--overlay-divider-dark);
+  padding: var(--space-2) 0;
+  flex-shrink: 0;
+}
+.sf-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 4px 14px;
+  color: var(--text-inverse-muted);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+  position: relative;
+  text-decoration: none;
+}
+.sf-item:hover {
+  color: var(--text-inverse);
+  background: var(--overlay-hover-dark);
+}
+.sf-icon-wrap {
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.sf-avatar-img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sf-avatar-img img { width: 100%; height: 100%; object-fit: cover; }
+.sf-avatar-status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green-500);
+  border: 1.5px solid var(--neutral-800);
+}
+.sf-text { font-size: var(--font-size-sm); }
+
+/* App shell layout */
+.app-shell {
+  padding-top: var(--topnav-height);
+  padding-left: var(--sidebar-width);
+  min-height: 100vh;
+  transition: padding-left 0.2s ease;
+}
+.app-shell.sidebar-collapsed {
+  padding-left: var(--sidebar-collapsed-width);
+}

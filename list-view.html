@@ -1,0 +1,371 @@
+<!-- ============================================================
+   OPERATE DS — LIST VIEW HTML SNIPPET
+   Source: operate-shell-components.netlify.app/#list-view
+   Status: ⚠️ Needs Chrome verification
+
+   RULES:
+   1. List View is a SEPARATE INDEPENDENT widget from Radar.
+      Never nest one inside the other.
+   2. View switching uses the TAB SWITCHER (.op-list-tabs / .op-list-tab)
+      — NOT a <select> dropdown, NOT a custom tab bar.
+   3. Sticky Action column: ALWAYS position: sticky; right: 0.
+      It is the LAST column. Never remove or move it.
+   4. Column headers and row data come from the screenshot —
+      everything else (classes, structure, shell) comes from the DS.
+
+   EXAMPLE COLUMNS (Task Management — Approvals For Me):
+   checkbox | flag | Task / Phase | Matter | Due Date | Assignee | Status | [sticky actions]
+   ============================================================ -->
+
+<!-- ── Widget shell (List View ships EXPANDED) ────────────── -->
+<div class="op-widget is-expanded" id="list-view-widget">
+
+  <!-- Dark header bar — full-width click collapses/expands -->
+  <div class="op-widget-header" onclick="toggleWidget('list-view-widget')">
+    <span class="op-widget-title">Task Management</span>
+    <div class="op-widget-header-actions" onclick="event.stopPropagation()">
+      <!-- Refresh -->
+      <button class="op-widget-header-btn" title="Refresh">
+        <i class="fa-solid fa-rotate-right"></i>
+      </button>
+      <!-- Filter -->
+      <button class="op-widget-header-btn" title="Filter">
+        <i class="fa-solid fa-filter"></i>
+      </button>
+    </div>
+    <i class="fa-solid fa-chevron-up op-widget-chevron"></i>
+  </div>
+
+  <div class="op-widget-body">
+
+    <!-- ── Tab / Context Switcher ─────────────────────────── -->
+    <!-- USE THIS — NOT a dropdown, NOT a custom tab bar       -->
+    <div class="op-list-tabs" role="tablist">
+      <button class="op-list-tab" role="tab" data-tab="all">
+        All Tasks
+        <span class="op-list-tab-count">47</span>
+      </button>
+      <button class="op-list-tab active" role="tab" data-tab="approvals">
+        Approvals For Me
+        <span class="op-list-tab-count">12</span>
+      </button>
+      <button class="op-list-tab" role="tab" data-tab="assigned">
+        Assigned To Me
+        <span class="op-list-tab-count">8</span>
+      </button>
+      <button class="op-list-tab" role="tab" data-tab="created">
+        Created By Me
+        <span class="op-list-tab-count">6</span>
+      </button>
+      <button class="op-list-tab" role="tab" data-tab="watching">
+        Watching
+        <span class="op-list-tab-count">3</span>
+      </button>
+    </div>
+
+    <!-- ── Toolbar ───────────────────────────────────────── -->
+    <div class="op-list-toolbar">
+      <div class="op-list-toolbar-left">
+        <!-- Search -->
+        <button class="op-toolbar-btn">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          Search
+        </button>
+        <!-- Filter -->
+        <button class="op-toolbar-btn">
+          <i class="fa-solid fa-sliders"></i>
+          Filter
+        </button>
+        <!-- Group by -->
+        <button class="op-toolbar-btn">
+          <i class="fa-solid fa-layer-group"></i>
+          Group
+        </button>
+      </div>
+      <div class="op-list-toolbar-right">
+        <!-- Sort -->
+        <button class="op-toolbar-icon-btn" title="Sort">
+          <i class="fa-solid fa-arrow-up-wide-short"></i>
+          <span class="tooltip">Sort</span>
+        </button>
+        <!-- Columns -->
+        <button class="op-toolbar-icon-btn" title="Columns">
+          <i class="fa-solid fa-table-columns"></i>
+          <span class="tooltip">Columns</span>
+        </button>
+        <!-- Export -->
+        <button class="op-toolbar-icon-btn" title="Export">
+          <i class="fa-solid fa-download"></i>
+          <span class="tooltip">Export</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Bulk Actions Bar (hidden until rows selected) ──── -->
+    <div class="op-bulk-bar" id="bulk-bar">
+      <span id="bulk-count">0 selected</span>
+      <button class="op-bulk-action-btn">Mark Complete</button>
+      <button class="op-bulk-action-btn">Reassign</button>
+      <button class="op-bulk-action-btn">Set Due Date</button>
+      <button class="op-bulk-action-btn" style="margin-left: auto; color: var(--text-danger); border-color: var(--text-danger);">Delete</button>
+    </div>
+
+    <!-- ── Table ─────────────────────────────────────────── -->
+    <div class="op-list-scroll">
+      <table class="op-list-table">
+        <thead>
+          <tr>
+            <!-- Checkbox — select all -->
+            <th class="th-check">
+              <input type="checkbox" class="op-check" id="select-all" onchange="toggleAll(this)">
+            </th>
+            <!-- Flag -->
+            <th class="th-flag"></th>
+            <!-- Task / Phase — sortable, currently sorted asc -->
+            <th class="sortable sort-active">
+              Task / Phase
+              <i class="fa-solid fa-arrow-up-long"></i>
+            </th>
+            <!-- Matter -->
+            <th class="sortable">Matter</th>
+            <!-- Due Date -->
+            <th class="sortable">Due Date</th>
+            <!-- Assignee -->
+            <th>Assignee</th>
+            <!-- Status -->
+            <th>Status</th>
+            <!-- Sticky action column — ALWAYS last, ALWAYS sticky -->
+            <th class="th-action"></th>
+          </tr>
+        </thead>
+        <tbody id="task-list-body">
+
+          <!-- ── Example row 1 — overdue ── -->
+          <tr data-id="1">
+            <td class="td-check">
+              <input type="checkbox" class="op-check row-check" data-id="1" onchange="updateBulk()">
+            </td>
+            <td class="td-flag">
+              <button class="op-flag-btn" onclick="toggleFlag(this)">
+                <i class="fa-solid fa-flag unflagged"></i>
+              </button>
+            </td>
+            <td class="td-work-item">
+              <a class="op-list-link" href="#">Review settlement agreement</a>
+              <div>
+                <span class="op-phase-badge">
+                  <i class="fa-solid fa-circle-half-stroke"></i>
+                  Litigation
+                  <span class="op-days-badge">14d</span>
+                </span>
+              </div>
+            </td>
+            <td><a class="op-list-link" href="#">Harrington v. State</a></td>
+            <td><span class="due-date overdue">May 20, 2026</span></td>
+            <td>Emily Carl</td>
+            <td>
+              <span class="op-badge op-badge--danger">Overdue</span>
+            </td>
+            <td class="td-action">
+              <div class="op-action-cell">
+                <button class="op-action-btn">
+                  <i class="fa-solid fa-eye"></i>
+                  <span class="tooltip">View</span>
+                </button>
+                <div class="op-dropdown">
+                  <button class="op-action-btn" onclick="toggleDropdown(this)">
+                    <i class="fa-solid fa-ellipsis"></i>
+                    <span class="tooltip">More</span>
+                  </button>
+                  <div class="op-dropdown-menu">
+                    <button class="op-dropdown-item"><i class="fa-solid fa-pen"></i>Edit</button>
+                    <button class="op-dropdown-item"><i class="fa-solid fa-circle-check"></i>Mark Complete</button>
+                    <button class="op-dropdown-item"><i class="fa-solid fa-user-pen"></i>Reassign</button>
+                    <div class="op-dropdown-divider"></div>
+                    <button class="op-dropdown-item danger"><i class="fa-solid fa-trash"></i>Delete</button>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- ── Example row 2 — due today ── -->
+          <tr data-id="2">
+            <td class="td-check">
+              <input type="checkbox" class="op-check row-check" data-id="2" onchange="updateBulk()">
+            </td>
+            <td class="td-flag">
+              <button class="op-flag-btn" onclick="toggleFlag(this)">
+                <i class="fa-solid fa-flag"></i>
+              </button>
+            </td>
+            <td class="td-work-item">
+              <a class="op-list-link" href="#">File motion for continuance</a>
+              <div>
+                <span class="op-phase-badge">
+                  <i class="fa-solid fa-circle-half-stroke"></i>
+                  Pre-Trial
+                  <span class="op-days-badge">3d</span>
+                </span>
+              </div>
+            </td>
+            <td><a class="op-list-link" href="#">Delacroix Estate</a></td>
+            <td><span class="due-date">May 28, 2026</span></td>
+            <td>Emily Carl</td>
+            <td>
+              <span class="op-badge op-badge--warning">In Progress</span>
+            </td>
+            <td class="td-action">
+              <div class="op-action-cell">
+                <button class="op-action-btn">
+                  <i class="fa-solid fa-eye"></i>
+                  <span class="tooltip">View</span>
+                </button>
+                <div class="op-dropdown">
+                  <button class="op-action-btn" onclick="toggleDropdown(this)">
+                    <i class="fa-solid fa-ellipsis"></i>
+                    <span class="tooltip">More</span>
+                  </button>
+                  <div class="op-dropdown-menu">
+                    <button class="op-dropdown-item"><i class="fa-solid fa-pen"></i>Edit</button>
+                    <button class="op-dropdown-item"><i class="fa-solid fa-circle-check"></i>Mark Complete</button>
+                    <button class="op-dropdown-item"><i class="fa-solid fa-user-pen"></i>Reassign</button>
+                    <div class="op-dropdown-divider"></div>
+                    <button class="op-dropdown-item danger"><i class="fa-solid fa-trash"></i>Delete</button>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- ── Example row 3 — upcoming ── -->
+          <tr data-id="3">
+            <td class="td-check">
+              <input type="checkbox" class="op-check row-check" data-id="3" onchange="updateBulk()">
+            </td>
+            <td class="td-flag">
+              <button class="op-flag-btn" onclick="toggleFlag(this)">
+                <i class="fa-solid fa-flag unflagged"></i>
+              </button>
+            </td>
+            <td class="td-work-item">
+              <a class="op-list-link" href="#">Prepare client intake documents</a>
+              <div>
+                <span class="op-phase-badge">
+                  <i class="fa-solid fa-circle-half-stroke"></i>
+                  Intake
+                  <span class="op-days-badge">7d</span>
+                </span>
+              </div>
+            </td>
+            <td><a class="op-list-link" href="#">Nguyen Family Trust</a></td>
+            <td><span class="due-date">Jun 4, 2026</span></td>
+            <td>Emily Carl</td>
+            <td>
+              <span class="op-badge op-badge--info">Pending Approval</span>
+            </td>
+            <td class="td-action">
+              <div class="op-action-cell">
+                <button class="op-action-btn">
+                  <i class="fa-solid fa-eye"></i>
+                  <span class="tooltip">View</span>
+                </button>
+                <div class="op-dropdown">
+                  <button class="op-action-btn" onclick="toggleDropdown(this)">
+                    <i class="fa-solid fa-ellipsis"></i>
+                    <span class="tooltip">More</span>
+                  </button>
+                  <div class="op-dropdown-menu">
+                    <button class="op-dropdown-item"><i class="fa-solid fa-pen"></i>Edit</button>
+                    <button class="op-dropdown-item"><i class="fa-solid fa-circle-check"></i>Mark Complete</button>
+                    <button class="op-dropdown-item"><i class="fa-solid fa-user-pen"></i>Reassign</button>
+                    <div class="op-dropdown-divider"></div>
+                    <button class="op-dropdown-item danger"><i class="fa-solid fa-trash"></i>Delete</button>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div><!-- /.op-list-scroll -->
+
+  </div><!-- /.op-widget-body -->
+</div><!-- /.op-widget#list-view-widget -->
+
+
+<!-- ── List View JS ──────────────────────────────────────────
+     Include once per prototype. Handles:
+     - Tab switching
+     - Checkbox selection + bulk bar
+     - Flag toggling
+     - Dropdown open/close
+     - Widget collapse (shared with Radar — see widget-shell.html)
+──────────────────────────────────────────────────────────── -->
+<script>
+// Tab switching
+document.querySelectorAll('.op-list-tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.op-list-tab').forEach(function(t) {
+      t.classList.remove('active');
+    });
+    this.classList.add('active');
+  });
+});
+
+// Widget toggle
+function toggleWidget(id) {
+  var w = document.getElementById(id);
+  if (!w) return;
+  var expanded = w.classList.contains('is-expanded');
+  w.classList.toggle('is-expanded', !expanded);
+  w.classList.toggle('is-collapsed', expanded);
+}
+
+// Bulk selection
+function toggleAll(master) {
+  document.querySelectorAll('.row-check').forEach(function(cb) {
+    cb.checked = master.checked;
+    cb.closest('tr').classList.toggle('selected', master.checked);
+  });
+  updateBulk();
+}
+function updateBulk() {
+  var checked = document.querySelectorAll('.row-check:checked').length;
+  var bulkBar = document.getElementById('bulk-bar');
+  if (bulkBar) {
+    bulkBar.classList.toggle('visible', checked > 0);
+    var countEl = document.getElementById('bulk-count');
+    if (countEl) countEl.textContent = checked + ' selected';
+  }
+  document.querySelectorAll('.row-check').forEach(function(cb) {
+    cb.closest('tr').classList.toggle('selected', cb.checked);
+  });
+}
+
+// Flag toggle
+function toggleFlag(btn) {
+  var icon = btn.querySelector('i');
+  icon.classList.toggle('unflagged');
+}
+
+// Dropdown open/close
+function toggleDropdown(btn) {
+  var menu = btn.parentElement.querySelector('.op-dropdown-menu');
+  if (!menu) return;
+  var isOpen = menu.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.op-dropdown-menu.open').forEach(function(m) {
+    m.classList.remove('open');
+  });
+  if (!isOpen) menu.classList.add('open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.op-dropdown')) {
+    document.querySelectorAll('.op-dropdown-menu.open').forEach(function(m) {
+      m.classList.remove('open');
+    });
+  }
+});
+</script>

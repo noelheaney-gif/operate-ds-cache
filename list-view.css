@@ -1,0 +1,419 @@
+/* ============================================================
+   OPERATE DS — LIST VIEW CSS
+   Source: operate-shell-components.netlify.app/#list-view
+   Status: ⚠️ Needs Chrome verification
+   ============================================================ */
+
+/* ── Tab / Context Switcher ──────────────────────────────── */
+/* Use this pattern — NOT a dropdown, NOT a custom tab bar    */
+.op-list-tabs {
+  display: flex;
+  align-items: flex-end;
+  padding: 0 var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface-raised);
+  overflow-x: auto;
+  gap: 0;
+  scrollbar-width: none;
+}
+.op-list-tabs::-webkit-scrollbar { display: none; }
+
+.op-list-tab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-tertiary);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.15s;
+  margin-bottom: -1px;
+  position: relative;
+}
+.op-list-tab:hover { color: var(--text-primary); }
+.op-list-tab.active {
+  color: var(--text-brand);
+  border-bottom-color: var(--border-focus);
+  font-weight: var(--font-weight-semibold);
+}
+
+.op-list-tab-count {
+  background: var(--surface-sunken);
+  border-radius: 10px;
+  padding: 1px 6px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+}
+.op-list-tab.active .op-list-tab-count {
+  background: var(--state-info-bg);
+  color: var(--state-info-fg);
+}
+
+/* ── Toolbar ─────────────────────────────────────────────── */
+.op-list-toolbar {
+  display: flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface-raised);
+  gap: var(--space-2);
+  min-height: 44px;
+}
+.op-list-toolbar-left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.op-list-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.op-toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 5px var(--space-2);
+  border-radius: 4px;
+  font-size: var(--font-size-sm);
+  font-family: inherit;
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  cursor: pointer;
+  background: none;
+}
+.op-toolbar-btn:hover {
+  background: var(--surface-sunken);
+  border-color: var(--border-default);
+}
+.op-toolbar-btn.active {
+  background: var(--state-info-bg);
+  border-color: var(--border-focus);
+  color: var(--text-brand);
+}
+
+.op-toolbar-icon-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  transition: background 0.15s, color 0.15s;
+  position: relative;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+}
+.op-toolbar-icon-btn:hover {
+  background: var(--surface-sunken);
+  color: var(--text-primary);
+}
+
+/* Toolbar tooltips */
+.op-toolbar-icon-btn .tooltip {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--neutral-900);
+  color: #fff;
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+  padding: 4px 8px;
+  border-radius: 4px;
+  box-shadow: var(--shadow-tooltip);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 400;
+}
+.op-toolbar-icon-btn:hover .tooltip { opacity: 1; }
+.op-toolbar-icon-btn:last-child .tooltip {
+  left: auto; right: 0; transform: none;
+}
+
+/* ── Bulk Actions Bar ────────────────────────────────────── */
+.op-bulk-bar {
+  display: none;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  background: var(--state-info-bg);
+  border-bottom: 1px solid var(--blue-100);
+  font-size: var(--font-size-sm);
+  color: var(--text-brand);
+  font-weight: var(--font-weight-medium);
+}
+.op-bulk-bar.visible { display: flex; }
+.op-bulk-action-btn {
+  padding: 4px var(--space-3);
+  border: 1px solid var(--border-focus);
+  border-radius: 4px;
+  font-size: var(--font-size-sm);
+  color: var(--text-brand);
+  background: var(--surface-raised);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.op-bulk-action-btn:hover { background: var(--surface-brand-subtle); }
+
+/* ── Table ───────────────────────────────────────────────── */
+.op-list-scroll { overflow-x: auto; }
+
+.op-list-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.op-list-table thead th {
+  background: var(--surface-raised);
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-tertiary);
+  border-bottom: 2px solid var(--border-subtle);
+  white-space: nowrap;
+  user-select: none;
+}
+.op-list-table thead th.sortable { cursor: pointer; }
+.op-list-table thead th.sortable:hover {
+  color: var(--text-primary);
+  background: var(--surface-sunken);
+}
+.op-list-table thead th.sort-active { color: var(--text-primary); }
+.op-list-table thead th.sort-active i { color: var(--text-brand); margin-left: 2px; }
+
+/* Narrow columns */
+.op-list-table thead th.th-check,
+.op-list-table thead th.th-flag,
+.op-list-table tbody td.td-check,
+.op-list-table tbody td.td-flag {
+  width: 36px;
+  padding: var(--space-2);
+  text-align: center;
+}
+
+/* Rows */
+.op-list-table tbody tr {
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface-raised);
+  transition: background 0.1s;
+}
+.op-list-table tbody tr:hover { background: var(--surface-page); }
+.op-list-table tbody tr.selected { background: var(--state-info-bg); }
+
+.op-list-table tbody td {
+  padding: var(--space-2) var(--space-3);
+  vertical-align: middle;
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+}
+
+/* Links in table */
+.op-list-link {
+  color: var(--text-link);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+}
+.op-list-link:hover { text-decoration: underline; }
+
+/* Sticky Action column — LAST column, always right */
+.op-list-table thead th.th-action,
+.op-list-table tbody td.td-action {
+  position: sticky;
+  right: 0;
+  background: var(--surface-raised);
+  border-left: 1px solid var(--border-subtle);
+  z-index: 2;
+}
+.op-list-table tbody tr:hover td.td-action { background: var(--surface-page); }
+.op-list-table tbody tr.selected td.td-action { background: var(--state-info-bg); }
+
+/* Action cell contents */
+.op-action-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0 var(--space-1);
+}
+.op-action-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  font-size: 13px;
+  transition: background 0.15s, color 0.15s;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+  position: relative;
+}
+.op-action-btn:hover {
+  background: var(--surface-sunken);
+  color: var(--text-primary);
+}
+.op-action-btn .tooltip {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: var(--neutral-900);
+  color: #fff;
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+  padding: 4px 8px;
+  border-radius: 4px;
+  box-shadow: var(--shadow-tooltip);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 400;
+}
+.op-action-btn:hover .tooltip { opacity: 1; }
+
+/* ── Dropdown menu ───────────────────────────────────────── */
+.op-dropdown { position: relative; display: inline-block; }
+.op-dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  min-width: 180px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  box-shadow: var(--shadow-card);
+  z-index: 300;
+  display: none;
+  padding: var(--space-1) 0;
+}
+.op-dropdown-menu.open { display: block; }
+.op-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.1s;
+  font-family: inherit;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+}
+.op-dropdown-item:hover { background: var(--surface-sunken); }
+.op-dropdown-item i {
+  width: 16px;
+  text-align: center;
+  color: var(--text-tertiary);
+  font-size: 12px;
+}
+.op-dropdown-divider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: var(--space-1) 0;
+}
+.op-dropdown-item.danger { color: var(--text-danger); }
+.op-dropdown-item.danger i { color: var(--text-danger); }
+
+/* ── Badges in table ─────────────────────────────────────── */
+.op-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1;
+  padding: 2px 6px;
+  min-width: 18px;
+}
+.op-badge--sm {
+  font-size: 10px;
+  padding: 1px 5px;
+  min-width: 16px;
+  border-radius: 8px;
+}
+.op-badge--danger { background: var(--state-danger-bg); color: var(--state-danger-fg); }
+.op-badge--success { background: var(--state-success-bg); color: var(--state-success-fg); }
+.op-badge--info { background: var(--state-info-bg); color: var(--state-info-fg); }
+.op-badge--warning { background: var(--state-warning-bg); color: var(--state-warning-fg); }
+.op-badge--neutral { background: var(--surface-sunken); color: var(--text-secondary); }
+
+/* Phase badge pattern */
+.op-phase-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.op-phase-badge i { font-size: 11px; color: var(--text-tertiary); }
+.op-days-badge {
+  display: inline-flex;
+  font-size: 10px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-tertiary);
+  background: var(--surface-sunken);
+  border-radius: 4px;
+  padding: 1px 5px;
+  white-space: nowrap;
+}
+
+/* Work item cell */
+.td-work-item {
+  max-width: 220px;
+  white-space: normal;
+  word-break: break-word;
+  line-height: var(--line-height-normal);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+/* Due date */
+.due-date { white-space: nowrap; color: var(--text-secondary); }
+.due-date.overdue {
+  color: var(--text-danger);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Flag button */
+.op-flag-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.op-flag-btn .fa-flag { color: var(--green-500); font-size: 13px; }
+.op-flag-btn .fa-flag.unflagged { color: var(--neutral-400); }
+
+/* Checkbox */
+.op-check {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--border-focus);
+}

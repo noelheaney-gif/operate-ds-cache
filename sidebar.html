@@ -1,0 +1,147 @@
+<!-- ============================================================
+   OPERATE DS — SIDEBAR HTML SNIPPET
+   Source: operate-shell-components.netlify.app/#side-nav
+   Status: ⚠️ Needs Chrome verification
+
+   PERSONA LOCK: Emily Carl is the ALWAYS default persona.
+   No matter what a screenshot shows, use Emily Carl.
+   avatar initials: EC  |  name: Emily Carl  |  role: Attorney
+   ============================================================ -->
+
+<!-- Paste inside <body> — requires sidebar.css + tokens.css -->
+
+<aside class="sidebar" id="sidebar">
+
+  <!-- User section — ALWAYS Emily Carl -->
+  <div class="sidebar-user">
+    <div class="sidebar-user-btns">
+      <button class="sidebar-user-btn">
+        <span class="sub-abbr">EC</span>
+        <span class="sub-label">Emily Carl</span>
+        <span class="sub-count">3</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Navigation scroll area -->
+  <nav class="sidebar-nav">
+
+    <!-- Dashboard -->
+    <div class="sidebar-item" data-route="dashboard">
+      <i class="fa-solid fa-house"></i>
+      <span class="sidebar-item-label">Dashboard</span>
+      <span class="tooltip">Dashboard</span>
+    </div>
+
+    <!-- Matters -->
+    <div class="sidebar-item" data-route="matters">
+      <i class="fa-solid fa-folder-open"></i>
+      <span class="sidebar-item-label">Matters</span>
+      <span class="tooltip">Matters</span>
+    </div>
+
+    <!-- Tasks — active item for Task Management prototype -->
+    <div class="sidebar-item active" data-route="tasks">
+      <i class="fa-solid fa-circle-check"></i>
+      <span class="sidebar-item-label">Tasks</span>
+      <span class="sidebar-item-count">12</span>
+      <span class="tooltip">Tasks</span>
+    </div>
+
+    <!-- Time -->
+    <div class="sidebar-item" data-route="time">
+      <i class="fa-solid fa-clock"></i>
+      <span class="sidebar-item-label">Time</span>
+      <span class="tooltip">Time</span>
+    </div>
+
+    <!-- Calendar -->
+    <div class="sidebar-item" data-route="calendar">
+      <i class="fa-solid fa-calendar-days"></i>
+      <span class="sidebar-item-label">Calendar</span>
+      <span class="tooltip">Calendar</span>
+    </div>
+
+    <!-- Documents -->
+    <div class="sidebar-item" data-route="documents">
+      <i class="fa-solid fa-file-lines"></i>
+      <span class="sidebar-item-label">Documents</span>
+      <span class="tooltip">Documents</span>
+    </div>
+
+    <!-- Billing -->
+    <div class="sidebar-item" data-route="billing">
+      <i class="fa-solid fa-file-invoice-dollar"></i>
+      <span class="sidebar-item-label">Billing</span>
+      <span class="tooltip">Billing</span>
+    </div>
+
+    <!-- Contacts -->
+    <div class="sidebar-item" data-route="contacts">
+      <i class="fa-solid fa-address-book"></i>
+      <span class="sidebar-item-label">Contacts</span>
+      <span class="tooltip">Contacts</span>
+    </div>
+
+    <!-- Reports -->
+    <div class="sidebar-item" data-route="reports">
+      <i class="fa-solid fa-chart-bar"></i>
+      <span class="sidebar-item-label">Reports</span>
+      <span class="tooltip">Reports</span>
+    </div>
+
+  </nav>
+
+  <!-- Footer — fixed order: Help → User → Collapse -->
+  <div class="sidebar-footer">
+
+    <!-- Help -->
+    <a href="#" class="sf-item">
+      <span class="sf-icon-wrap"><i class="fa-solid fa-circle-question"></i></span>
+      <span class="sf-text">Help</span>
+      <span class="tooltip">Help</span>
+    </a>
+
+    <!-- User — ALWAYS Emily Carl -->
+    <div class="sf-item" id="sf-user-btn">
+      <div class="sf-avatar-img">
+        <!-- Inline SVG avatar — EC initials, no external image required -->
+        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <rect width="24" height="24" rx="12" fill="#6366f1"/>
+          <text x="12" y="16" text-anchor="middle" font-family="Inter,sans-serif"
+                font-size="9" font-weight="600" fill="#fff">EC</text>
+        </svg>
+        <span class="sf-avatar-status"></span>
+      </div>
+      <span class="sf-text">Emily Carl</span>
+      <span class="tooltip">Emily Carl</span>
+    </div>
+
+    <!-- Collapse toggle -->
+    <div class="sf-item" id="sidebar-collapse-btn">
+      <span class="sf-icon-wrap"><i class="fa-solid fa-chevron-left" id="sidebar-collapse-icon"></i></span>
+      <span class="sf-text">Collapse</span>
+      <span class="tooltip">Expand</span>
+    </div>
+
+  </div>
+</aside>
+
+<!-- Sidebar collapse/expand JS — include once per prototype -->
+<script>
+(function() {
+  var btn = document.getElementById('sidebar-collapse-btn');
+  var sidebar = document.getElementById('sidebar');
+  var icon = document.getElementById('sidebar-collapse-icon');
+  var shell = document.querySelector('.app-shell');
+  if (!btn || !sidebar) return;
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var collapsed = sidebar.classList.toggle('collapsed');
+    if (shell) shell.classList.toggle('sidebar-collapsed', collapsed);
+    icon.className = collapsed
+      ? 'fa-solid fa-chevron-right'
+      : 'fa-solid fa-chevron-left';
+  });
+})();
+</script>

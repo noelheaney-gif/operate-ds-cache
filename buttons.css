@@ -1,0 +1,120 @@
+/* ============================================================
+   OPERATE DS — BUTTON CSS
+   Source: operate-shell-components.netlify.app/#buttons
+   Status: ✅ Class names verified via Chrome accessibility tree
+           ⚠️ Exact padding/radius values need Chrome CSS verification
+
+   CLASS NAME RULE: All DS buttons use .op-btn as the base class.
+   NEVER use .btn — that is Bootstrap/Tailwind naming, not Operate DS.
+
+   Verified from DS:
+     <button class="op-btn op-btn--primary">Primary</button>
+     <button class="op-btn op-btn--secondary">Secondary</button>
+     <button class="op-btn op-btn--danger">Danger</button>
+     <button class="op-btn op-btn--ghost">Ghost</button>
+   ============================================================ */
+
+/* ── Base ────────────────────────────────────────────────── */
+.op-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 6px var(--space-3);
+  border-radius: 6px;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  font-family: inherit;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 0.15s, border-color 0.15s, color 0.15s, box-shadow 0.15s;
+  white-space: nowrap;
+  text-decoration: none;
+  line-height: 1;
+}
+.op-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ── Sizes ───────────────────────────────────────────────── */
+.op-btn--sm {
+  padding: 4px var(--space-2);
+  font-size: var(--font-size-xs);
+  border-radius: 4px;
+}
+.op-btn--lg {
+  padding: 9px var(--space-4);
+  font-size: var(--font-size-md);
+}
+
+/* ── Primary ─────────────────────────────────────────────── */
+.op-btn--primary {
+  background: var(--blue-600);
+  color: #fff;
+  border-color: var(--blue-600);
+}
+.op-btn--primary:hover:not(:disabled) {
+  background: var(--blue-700);
+  border-color: var(--blue-700);
+}
+.op-btn--primary:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* ── Secondary ───────────────────────────────────────────── */
+.op-btn--secondary {
+  background: var(--surface-raised);
+  color: var(--text-primary);
+  border-color: var(--border-default);
+}
+.op-btn--secondary:hover:not(:disabled) {
+  background: var(--surface-sunken);
+  border-color: var(--border-strong);
+}
+
+/* ── Ghost (no border) ───────────────────────────────────── */
+.op-btn--ghost {
+  background: none;
+  color: var(--text-secondary);
+  border-color: transparent;
+}
+.op-btn--ghost:hover:not(:disabled) {
+  background: var(--surface-sunken);
+  color: var(--text-primary);
+}
+
+/* ── Danger ──────────────────────────────────────────────── */
+.op-btn--danger {
+  background: var(--red-600);
+  color: #fff;
+  border-color: var(--red-600);
+}
+.op-btn--danger:hover:not(:disabled) {
+  background: var(--red-700);
+  border-color: var(--red-700);
+}
+
+/* ── Danger outline ──────────────────────────────────────── */
+.op-btn--danger-outline {
+  background: none;
+  color: var(--text-danger);
+  border-color: var(--text-danger);
+}
+.op-btn--danger-outline:hover:not(:disabled) {
+  background: var(--state-danger-bg);
+}
+
+/* ── Icon-only button ────────────────────────────────────── */
+.op-btn--icon {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  justify-content: center;
+  border-radius: 6px;
+}
+.op-btn--icon.op-btn--sm {
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+}

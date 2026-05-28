@@ -1,0 +1,48 @@
+/* ============================================================
+   OPERATE DS — PAGE HEADER CSS
+   Source: operate-shell-components.netlify.app/#page-header
+   Status: ⚠️ Needs Chrome verification
+   ============================================================ */
+
+.op-page-header {
+  background: var(--surface-raised);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: var(--space-4) var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  /* Bleeds to full content width — use negative margin if inside padded container */
+  margin: calc(-1 * var(--space-6));
+  margin-bottom: var(--space-6);
+}
+
+.op-page-header-title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  flex: 1;
+  line-height: var(--line-height-tight);
+}
+
+.op-page-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.op-page-header-icon-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  font-size: var(--font-size-sm);
+  transition: background 0.15s, color 0.15s;
+  position: relative;
+}
+.op-page-header-icon-btn:hover {
+  background: var(--surface-sunken);
+  color: var(--text-primary);
+}
