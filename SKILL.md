@@ -225,9 +225,51 @@ You only need three things to ship Pass 1:
 
 Don't try to read columns, data, widgets, or interactions yet. That's Pass 2.
 
-### Step 2 — Pass 1: Ship the starter shell (target: under 30 seconds from PM message → artifact)
+### Step 2 — Pass 1: Send the starter shell URL (target: under 5 seconds, no artifact)
 
-**Do not fetch top-nav.html, sidebar.html, or page-header.html for Pass 1.** The full starter shell is embedded literally in this skill — below. Copy it into your artifact verbatim. Do exactly two substitutions:
+**Do not generate an artifact for Pass 1.** Generating an HTML file token-by-token takes minutes — the PM sees nothing until it's done. Instead, send a single URL pointing at the pre-rendered starter shell, hosted live. The PM clicks it, the shell loads in their browser in under 1 second.
+
+The URL format is:
+
+```
+https://operate-shell-components.netlify.app/starter.html?nav=<nav-key>&title=<url-encoded-title>
+```
+
+**Pick the `nav` key** that matches the screenshot:
+
+| Screen type | nav key |
+|---|---|
+| Dashboard / overview | `dashboard` |
+| New intake / new business | `new-business` |
+| Matter list / matter management | `matters` |
+| Task list / task management | `tasks` |
+| Litigation / cases | `litigations` |
+| Time entry | `my-time` |
+| Calendar | `my-calendar` |
+| Inbox / post / mail | `post-room` |
+| Analytics / reports | `reports` |
+
+If you can't tell, default to `dashboard`. Don't guess wrong.
+
+**URL-encode the title.** E.g. `Task Management` → `Task%20Management`. `Matter Dashboard — Q3` → `Matter%20Dashboard%20%E2%80%94%20Q3`.
+
+**Pass 1 output is just this one message** — no artifact, no HTML, no CSS:
+
+> Got your screenshot. Starter shell ready:
+> https://operate-shell-components.netlify.app/starter.html?nav=tasks&title=Task%20Management
+>
+> Click to see the shell load instantly. Side nav set to **Tasks**, title set to **Task Management**.
+> Building the content area now — anything wrong about the framing?
+
+Then **stop and wait** for the PM's reply. End the turn.
+
+---
+
+#### LEGACY — only use the embedded shell HTML below if the starter URL is unreachable
+
+(Skip this section unless `https://operate-shell-components.netlify.app/starter.html` returns a non-200. The hosted starter is always the first choice — it's instant.)
+
+**Embedded shell — fallback only.** Copy it into your artifact verbatim. Do exactly two substitutions:
 
 1. **Active sidebar item** — by default `My Dashboard` has `class="sidebar-item active"`. Move the `active` class to whichever item matches the screenshot:
    - Dashboard / overview screen → `My Dashboard`
