@@ -23,33 +23,35 @@ This single line costs nothing and prevents the 5-minute silence problem. The PM
 
 **Do NOT fetch llms.txt.** It is too large and will be truncated before the CSS blocks are reached, causing you to approximate CSS. Approximated CSS produces wrong-looking prototypes. Instead, fetch each component file individually from the DS cache repo.
 
-### Step 0 — Fetch all required DS files (run in parallel)
+### Step 0 — Fetch DS files (run in parallel)
 
-Fetch ALL of these raw GitHub URLs before writing a single line of HTML. Each file is small and will never truncate.
+All files live in the cache repo at `https://raw.githubusercontent.com/noelheaney-gif/operate-ds-cache/main/<filename>`. Each file is small and will never truncate.
+
+**CORE SHELL — always fetch these first (every prototype needs them):**
 
 ```
-TOKENS + RESET:
-https://raw.githubusercontent.com/noelheaney-gif/operate-ds-cache/main/tokens.css
-
-TOP NAV:
-https://raw.githubusercontent.com/noelheaney-gif/operate-ds-cache/main/top-nav.css
-https://raw.githubusercontent.com/noelheaney-gif/operate-ds-cache/main/top-nav.html
-
-SIDEBAR:
-https://raw.githubusercontent.com/noelheaney-gif/operate-ds-cache/main/sidebar.css
-https://raw.githubusercontent.com/noelheaney-gif/operate-ds-cache/main/sidebar.html
-
-PAGE HEADER:
-https://raw.githubusercontent.com/noelheaney-gif/operate-ds-cache/main/page-header.css
-https://raw.githubusercontent.com/noelheaney-gif/operate-ds-cache/main/page-header.html
-
-WIDGET SHELL:
-https://raw.githubusercontent.com/noelheaney-gif/operate-ds-cache/main/widget-shell.css
-
-LIST VIEW:
-https://raw.githubusercontent.com/noelheaney-gif/operate-ds-cache/main/list-view.css
-https://raw.githubusercontent.com/noelheaney-gif/operate-ds-cache/main/list-view.html
+tokens.css          ← always first; everything references these tokens
+top-nav.css
+top-nav.html
+sidebar.css
+sidebar.html
+page-header.css
+page-header.html
+widget-shell.css
+list-view.css
+list-view.html
 ```
+
+**ON-DEMAND COMPONENTS — fetch only the ones the screenshot/brief actually needs.** Don't fetch all of these every time; pull the specific files for the components you're about to render, after Step 1 tells you what's on the screen.
+
+```
+alert.css         badge.css         avatar.css        icon.css
+input.css         checkbox.css      switch.css        counter.css
+pill.css          card.css          dialog.css        toast.css
+tooltip.css       menu.css          rollup-card.css   empty-state.css
+```
+
+`tokens.css` must be fetched and pasted before any component CSS, because every component file references its custom properties. Paste a component file without the tokens block and its colours/spacing will be undefined.
 
 **Retry policy:** If any individual fetch fails or returns empty content, retry that file **up to 3 times** before treating it as a real failure. Most failures are transient (cold CDN cache, brief network hiccup) and the retry succeeds. Do not surface a one-off failure to the PM — only escalate after 3 attempts.
 
@@ -84,32 +86,18 @@ This is the most important rule in the skill. No exceptions.
 
 ---
 
-## ⚠️ PREVIEW URL CONVENTION — every link goes to the browser
+## ⚠️ PREVIEW CONVENTION — prototypes render as artifacts
 
-Any URL the skill surfaces — starter shell, hosted preview, per-component reference, anything the PM is meant to **open and look at** — must follow this format every time:
-
-> **Preview** → [Open in browser](https://operate-shell-components.netlify.app/starter.html?nav=tasks&title=Task%20Management)
+Prototypes are built and shown as **artifacts** (`create_artifact`), not as hosted URLs. There is no external host — the prototype is a single self-contained HTML file assembled from the cached DS files, and Cowork renders it live in the chat.
 
 Rules:
 
-1. **Always label it `Preview`** in bold so the PM's eye picks it up instantly. Never bury a URL in a sentence.
-2. **Always wrap as a markdown link** with the text `Open in browser`. Cowork renders this as a clickable link.
-3. **Never try to inline-render** the URL via iframe, image, screenshot, or "look at this preview" inline panel. Those break, render badly, or take forever. The browser is the canvas.
-4. **One blank line before and after** so the link sits in its own visual block — easy to spot, easy to click.
-5. If multiple previews exist (e.g. a starter URL + a hosted prototype), list each on its own line with the same `**Preview** → [Open in browser](URL)` format, plus a short label after the closing bracket explaining what's at that URL.
+1. **Never reference an external host.** There is no `starter.html`, no hosted preview server, no per-component reference URL to send the PM. The only network calls are the raw-GitHub fetches of the cache files in Step 0; everything else is local to the artifact.
+2. **The artifact is the canvas.** When the PM should see something, render/update the artifact — don't send a link.
+3. **Never inline-render** via iframe, image, or screenshot. The artifact itself is the live view.
+4. If you genuinely need to point the PM at something external (e.g. the cache repo on GitHub for reference), wrap it as a clearly labelled markdown link on its own line — but this is rare and never part of the normal build flow.
 
-**Don't do this:**
-- ❌ Inline rendering of a URL ("here's a preview:" followed by an embed attempt)
-- ❌ Bare URL pasted in a sentence ("check out https://... for the shell")
-- ❌ Code-fenced URL (PMs can't click)
-- ❌ "Click here" link text — be specific about what they're opening
-
-**Do this instead:**
-- ✅ A clearly labelled, clickable markdown link on its own line that opens in the browser
-
-This applies to **every URL the skill ever returns** — Pass 1 starter shell, future hosted previews, references to the DS spec site, anything.
-
-**Why this rule exists:** Prototypes built from invented styling look "almost-Operate" — close enough to be confusing, wrong enough to mislead the PM and anyone they show it to. The whole point of this skill is that prototypes match the live DS exactly. Inventing breaks that contract.
+**Why no host:** the skill must stand entirely on the cache repo. Depending on a separate hosted site means a second thing to keep alive and in sync; when that host goes away, every session breaks at Pass 1. Building from the cache keeps the skill self-contained.
 
 ---
 
@@ -118,7 +106,7 @@ This applies to **every URL the skill ever returns** — Pass 1 starter shell, f
 **Always use Emily Carl, not the user in the screenshot.**
 
 - Name: **Emily Carl**
-- Avatar: use the base64 avatar from `sidebar.html` verbatim — it is already embedded in the HTML snippet
+- Avatar: `sidebar.html` references the avatar as a relative path (`emily-carl-avatar.jpg`). Since prototypes are self-contained artifacts with no host, replace that `src` with an inline avatar that needs no external file: either a base64 data URI, or — simplest — an initials avatar ("EC") styled with the `op-avatar` component from `avatar.css`. Never leave the relative path in a shipped prototype; it renders as a broken image.
 - Status dot: green (online)
 - My Matters count: 24 (adjust only if PM specifies)
 - My Tasks count: 87 (adjust only if PM specifies)
@@ -213,13 +201,14 @@ These elements are owned by the DS. Always use the DS versions, no matter what t
 
 Build the `<style>` block in this order, copying each file verbatim:
 
-1. `tokens.css` → paste entire `:root` block
+1. `tokens.css` → paste entire `:root` block (always first — everything references it)
 2. `top-nav.css` → paste entire file verbatim
 3. `sidebar.css` → paste entire file verbatim
 4. `page-header.css` → paste entire file verbatim
 5. `widget-shell.css` → paste entire file verbatim
 6. `list-view.css` → paste entire file verbatim (if list view used)
-7. Prototype-specific layout only → use DS tokens, never raw values
+7. Any ON-DEMAND component CSS the prototype uses (`alert.css`, `dialog.css`, `card.css`, `avatar.css`, etc.) → paste each verbatim
+8. Prototype-specific layout only → use DS tokens, never raw values
 
 **If you didn't successfully fetch a CSS file in Step 0, you may not paste anything in its slot. Stop and report it.**
 
@@ -252,54 +241,14 @@ You only need three things to ship Pass 1:
 
 Don't try to read columns, data, widgets, or interactions yet. That's Pass 2.
 
-### Step 2 — Pass 1: Send the starter shell URL (target: under 5 seconds, no artifact)
+### Step 2 — Pass 1: Build the shell artifact from the cache
 
-**Do not generate an artifact for Pass 1.** Generating an HTML file token-by-token takes minutes — the PM sees nothing until it's done. Instead, send a single URL pointing at the pre-rendered starter shell, hosted live. The PM clicks it, the shell loads in their browser in under 1 second.
+Assemble the shell as a self-contained HTML artifact using the CORE SHELL files you fetched in Step 0. There is no hosted URL to send — you build it here and render it with `create_artifact`. Keep Pass 1 to the shell only (top nav, sidebar, page header, empty content canvas); the content area is Pass 2.
 
-The URL format is:
+Use the embedded shell skeleton below. Paste the fetched CSS verbatim into the `<style>` block at the marked slots, and paste the fetched HTML snippets (`top-nav.html`, `sidebar.html`, `page-header.html`) verbatim into the body at the marked slots. Do exactly two substitutions:
 
-```
-https://operate-shell-components.netlify.app/starter.html?nav=<nav-key>&title=<url-encoded-title>
-```
-
-**Pick the `nav` key** that matches the screenshot:
-
-| Screen type | nav key |
-|---|---|
-| Dashboard / overview | `dashboard` |
-| New intake / new business | `new-business` |
-| Matter list / matter management | `matters` |
-| Task list / task management | `tasks` |
-| Litigation / cases | `litigations` |
-| Time entry | `my-time` |
-| Calendar | `my-calendar` |
-| Inbox / post / mail | `post-room` |
-| Analytics / reports | `reports` |
-
-If you can't tell, default to `dashboard`. Don't guess wrong.
-
-**URL-encode the title.** E.g. `Task Management` → `Task%20Management`. `Matter Dashboard — Q3` → `Matter%20Dashboard%20%E2%80%94%20Q3`.
-
-**Pass 1 output is just this one message** — no artifact, no HTML, no CSS. Follow the **Preview URL convention** above exactly:
-
-> Got your screenshot. Side nav set to **Tasks**, title set to **Task Management**.
->
-> **Preview** → [Open in browser](https://operate-shell-components.netlify.app/starter.html?nav=tasks&title=Task%20Management)
->
-> Anything wrong about the framing before I build the content area?
-
-Then **stop and wait** for the PM's reply. End the turn.
-
----
-
-#### LEGACY — only use the embedded shell HTML below if the starter URL is unreachable
-
-(Skip this section unless `https://operate-shell-components.netlify.app/starter.html` returns a non-200. The hosted starter is always the first choice — it's instant.)
-
-**Embedded shell — fallback only.** Copy it into your artifact verbatim. Do exactly two substitutions:
-
-1. **Active sidebar item** — by default `My Dashboard` has `class="sidebar-item active"`. Move the `active` class to whichever item matches the screenshot:
-   - Dashboard / overview screen → `My Dashboard`
+1. **Active sidebar item** — move the `active` class to the item matching the screenshot:
+   - Dashboard / overview → `My Dashboard`
    - Matter list / matter management → `Matters`
    - Task list / task management → `Tasks`
    - Litigation / cases → `Litigations`
@@ -310,11 +259,17 @@ Then **stop and wait** for the PM's reply. End the turn.
    - New intake → `New Business`
    - If you can't tell, default to `My Dashboard` (don't guess wrong)
 
-2. **Page title** — the default text is `Matter Dashboard`. Replace with the title from the screenshot or PM brief.
+2. **Page title** — replace the default with the title from the screenshot or PM brief.
 
-**No other changes to the shell in Pass 1.** No restyling. No reordering nav items. No removing items. No adding items. No changing the user block. No changing the footer.
+3. **Avatar** — replace the `emily-carl-avatar.jpg` relative path with an inline initials avatar or base64 data URI (see DEFAULT PERSONA above).
 
-#### The starter shell — copy this entire block verbatim into your artifact
+**No other changes to the shell in Pass 1.** No restyling, no reordering nav items, no removing/adding items, no changing the user block or footer.
+
+**Close Pass 1 with:**
+
+> Here's the shell. Side nav set to **[X]**, title set to **[Y]**. Anything wrong about the framing before I build the content area?
+
+Then **stop and wait** for the PM's reply. End the turn.
 
 ```html
 <!DOCTYPE html>
@@ -360,7 +315,11 @@ Then **stop and wait** for the PM's reply. End the turn.
 <!-- Top Nav — verbatim from the DS, never modify -->
 <nav class="top-nav">
   <a class="top-nav-logo" href="#">
-    <img src="https://operate-shell-components.netlify.app/portal-brand-logo.png" alt="Clio Operate">
+    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='24'%3E%3C/svg%3E" alt="Clio Operate">
+    <!-- Use the logo markup exactly as it appears in the fetched top-nav.html.
+         The DS top-nav.html is the source of truth for the logo; paste that snippet
+         verbatim rather than this placeholder. No external host. -->
+
   </a>
   <div class="top-nav-search">
     <div class="top-nav-search-scope">
@@ -475,8 +434,7 @@ Then **stop and wait** for the PM's reply. End the turn.
     </a>
     <a class="sf-item" href="#">
       <span class="sf-avatar-img">
-        <img src="https://operate-shell-components.netlify.app/emily-carl-avatar.jpg" alt="Emily Carl">
-        <span class="sf-status-dot"></span>
+        <span class="op-avatar op-avatar--sm op-avatar--blue">EC<span class="sf-status-dot"></span></span>
       </span>
       <span class="sf-text">Emily Carl</span>
       <span class="tooltip">Emily Carl</span>
@@ -553,55 +511,30 @@ If you're not sure, round up. Under-promising and over-delivering beats the reve
 
 ### Step 4 — Pass 2: Fill the content area (update the Pass 1 artifact in place)
 
-**Default path: pick a pre-built layout URL — no artifact generation, no waiting.**
+**Update the existing artifact** — don't create a second one. The PM should see the same prototype now filled in, not two separate prototypes.
 
-The starter page accepts a `layout` query param. Five canonical layouts are pre-built and hosted — they render instantly in the browser when the PM clicks. Use these for **90% of prototypes**.
+Pass 2 keeps unchanged: top nav, side nav (same active item as Pass 1), page header (same title).
 
-| Layout key | Renders | Use when |
-|---|---|---|
-| `rollup-only` | 4 Roll Up Cards row | Screen is just a row of KPI cards |
-| `list-only` | Full-page List View | Screen is just a worklist or matter list |
-| `radar+list` | Radar (collapsed) + List View | Task or matter screen with radar at top |
-| `rollup+list` | 4 Roll Up Cards + List View | Most common — cards then list |
-| `rollup+radar+list` | Cards + Radar + List View | Full dashboard pattern |
+Pass 2 replaces the empty `.op-frame-canvas` placeholder with the real content area: widgets, list views, dialogs, etc. Fetch any ON-DEMAND component files you now need (alert, dialog, card, etc.) that you didn't already pull in Step 0, and paste their CSS verbatim into the `<style>` block after the core shell CSS.
 
-**Pass 2 URL format** (note: `+` in layout key must be URL-encoded as `%2B`):
+Common content patterns (build these from the cached files — there are no pre-built layouts to link to):
 
-```
-https://operate-shell-components.netlify.app/starter.html
-  ?nav=<nav-key>
-  &title=<url-encoded-title>
-  &layout=<layout-key>
-```
+| Pattern | Components |
+|---|---|
+| KPI row | Roll Up Card row (`rollup-card.css`) — 4 cards, grid 4→2→1 |
+| Worklist | List View (`list-view.css` + `list-view.html`) |
+| Task / matter screen | Radar (collapsed, `widget-shell.css`) + List View |
+| Standard dashboard | Roll Up Card row + List View |
+| Full dashboard | Roll Up Cards + Radar + List View |
 
-**Pass 2 output is just this one message** (no artifact for the default path):
-
-> **Preview** → [Open in browser](https://operate-shell-components.netlify.app/starter.html?nav=tasks&title=Task%20Management&layout=radar%2Blist)
->
-> Built with: Radar (collapsed by default) + List View. Sidebar on **Tasks**, title **Task Management**.
->
-> Want me to adjust anything — different layout, different active tab, real column names from the screenshot?
-
-Then end the turn.
-
----
-
-#### Fallback: artifact generation for bespoke content
-
-Use this **only** when the prototype needs content that doesn't fit one of the five pre-built layouts (e.g., a one-off custom widget, a screen with a unique structure, a brand-new pattern the DS hasn't shipped yet).
-
-**Tell the PM honestly:**
-
-> The shape of this screen doesn't match a pre-built layout — I'll have to generate it from scratch, which takes ~2–4 minutes. Want to proceed, or could we adapt to one of the standard layouts (rollup+list, radar+list, etc.)?
-
-Wait for the PM's "yes, generate" before starting. If they confirm, generate a full self-contained HTML artifact:
+Content requirements:
 - All CSS inline in `<style>` — pasted verbatim from fetched cache files, no approximations
 - Realistic placeholder data — real names, dates, matter numbers
 - Interactive where described — JS for tab switching, dropdowns, filter toggles
 - Desktop width (1280px) unless asked otherwise
-- `<!-- PROTOTYPE NOTES -->` block listing: DS files used, what was upgraded, what is faked
+- Update the `<!-- PROTOTYPE NOTES -->` block to list: DS files used, what was upgraded, what is faked
 
-The artifact path is slow because Cowork generates HTML character by character. Acceptable for one-off bespoke screens; **never** the default for screens that fit a pre-built layout.
+**Pass 2 output** is the updated artifact plus a short summary (see Step 6). Then end the turn.
 
 ### Step 5 — VERIFY against the source — do not skip
 
