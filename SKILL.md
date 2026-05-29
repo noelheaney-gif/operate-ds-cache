@@ -314,13 +314,13 @@ Then **stop and wait** for the PM's reply. End the turn.
 
 <!-- Top Nav — verbatim from the DS, never modify -->
 <nav class="top-nav">
-  <a class="top-nav-logo" href="#">
-    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='24'%3E%3C/svg%3E" alt="Clio Operate">
-    <!-- Use the logo markup exactly as it appears in the fetched top-nav.html.
-         The DS top-nav.html is the source of truth for the logo; paste that snippet
-         verbatim rather than this placeholder. No external host. -->
-
+  <a class="top-nav-logo" href="#" onclick="event.preventDefault()">
+    <!-- Logo: paste the markup from the fetched top-nav.html verbatim.
+           The relative src below is host-free placeholder geometry; the DS
+           top-nav.html is the source of truth. No external host. -->
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='24'%3E%3C/svg%3E" alt="Clio Operate">
   </a>
+
   <div class="top-nav-search">
     <div class="top-nav-search-scope">
       <i class="fas fa-search"></i>
@@ -328,6 +328,7 @@ Then **stop and wait** for the PM's reply. End the turn.
     </div>
     <input type="text" placeholder="Search all cases...">
   </div>
+
   <div class="top-nav-actions">
     <div class="has-tooltip">
       <button class="top-nav-icon-btn"><i class="fas fa-plus"></i></button>
@@ -348,7 +349,7 @@ Then **stop and wait** for the PM's reply. End the turn.
     <div class="has-tooltip">
       <button class="top-nav-icon-btn">
         <i class="fas fa-bell"></i>
-        <span class="op-badge op-badge--danger" data-count="3"></span>
+        <span class="op-badge op-badge--danger" data-count="3" aria-label="3 unread notifications"></span>
       </button>
       <span class="tooltip">Notifications</span>
     </div>
@@ -357,7 +358,9 @@ Then **stop and wait** for the PM's reply. End the turn.
 
 <!-- Side Nav — verbatim from the DS. ONLY change the `active` class location. -->
 <aside class="sidebar">
+  <!-- Scrollable area: user block + primary nav -->
   <div class="sidebar-nav">
+    <!-- User block (scrolls with the nav) -->
     <div class="sidebar-user">
       <div class="sidebar-user-btns">
         <button class="sidebar-user-btn">
@@ -426,21 +429,27 @@ Then **stop and wait** for the PM's reply. End the turn.
     </a>
   </div>
 
+  <!-- Footer -->
   <div class="sidebar-footer">
     <a class="sf-item" href="#">
-      <span class="sf-icon-wrap"><i class="fas fa-question"></i></span>
+      <span class="sf-icon-wrap">
+        <i class="fas fa-question"></i>
+      </span>
       <span class="sf-text">Help</span>
       <span class="tooltip">Help</span>
     </a>
     <a class="sf-item" href="#">
       <span class="sf-avatar-img">
+        <!-- Avatar: host-free. Initials avatar via op-avatar (avatar.css). -->
         <span class="op-avatar op-avatar--sm op-avatar--blue">EC<span class="sf-status-dot"></span></span>
       </span>
       <span class="sf-text">Emily Carl</span>
       <span class="tooltip">Emily Carl</span>
     </a>
     <button class="sf-item" data-sidebar-toggle>
-      <span class="sf-icon-wrap"><i class="fas fa-chevron-left" data-sidebar-toggle-icon></i></span>
+      <span class="sf-icon-wrap">
+        <i class="fas fa-chevron-left" data-sidebar-toggle-icon></i>
+      </span>
       <span class="sf-text sf-collapse-label" data-sidebar-toggle-label>Collapse</span>
       <span class="tooltip" data-sidebar-toggle-tooltip>Collapse</span>
     </button>
