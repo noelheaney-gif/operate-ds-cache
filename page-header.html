@@ -1,60 +1,8 @@
 <!-- ============================================================
-   OPERATE DS — PAGE HEADER HTML SNIPPET
-   Source: operate-shell-components.netlify.app/#page-header
-   Status: ⚠️ Needs Chrome verification
-
-   Usage:
-   - Replace "Task Management" with the page title from the screenshot
-   - Add/remove action buttons as needed for the screen
-   - Must sit at the top of .page-content, inside .app-shell
-   ============================================================ -->
-
-<!-- Paste at the top of .page-content — requires page-header.css + tokens.css -->
-
+     OPERATE DS — PAGE HEADER (HTML snippet)
+     Source: operate-design-system-builder/index.html (authoritative)
+     Regenerated: 2026-05-29 — verbatim from source
+     ============================================================ -->
 <header class="op-page-header">
-
-  <!-- Page title — replace with screen-specific title -->
-  <h1 class="op-page-header-title">Task Management</h1>
-
-  <!-- Action buttons — right-aligned -->
-  <div class="op-page-header-actions">
-
-    <!-- Settings / gear -->
-    <button class="op-page-header-icon-btn" title="Settings">
-      <i class="fa-solid fa-gear"></i>
-    </button>
-
-    <!-- Primary action — "New Task" button -->
-    <!-- Use .btn-primary from tokens for the filled button style -->
-    <button class="btn btn-primary btn-sm">
-      <i class="fa-solid fa-plus"></i>
-      New Task
-    </button>
-
-  </div>
+  <h1 class="op-page-header-title">Matter Dashboard</h1>
 </header>
-
-<!--
-  BUTTON TOKEN REFERENCE (add to your <style> block):
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-1);
-    padding: 6px var(--space-3);
-    border-radius: 6px;
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
-    font-family: inherit;
-    cursor: pointer;
-    border: 1px solid transparent;
-    transition: background 0.15s, border-color 0.15s, color 0.15s;
-  }
-  .btn-primary {
-    background: var(--blue-600);
-    color: #fff;
-    border-color: var(--blue-600);
-  }
-  .btn-primary:hover { background: var(--blue-700); border-color: var(--blue-700); }
-  .btn-sm { padding: 5px var(--space-2); font-size: var(--font-size-sm); }
--->

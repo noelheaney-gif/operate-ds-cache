@@ -1,0 +1,179 @@
+/* ============================================================
+   OPERATE DS — MENU
+   Source: operate-design-system-builder/index.html (authoritative)
+   Regenerated: 2026-05-29 — verbatim from source
+   ============================================================ */
+/* ─── Components: Menu (op-menu) ───
+   Floating dropdown surface. Variants: standard, dividers, search+single
+   group, search+multi groups, mega paged (multi-column with pagination). */
+.op-menu {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  width: 280px;
+  max-width: 100%;
+  padding: var(--space-2) 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.op-menu--mega {
+  width: min(960px, 100%);
+  padding: 0;
+}
+.op-menu-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.op-menu--mega .op-menu-header {
+  padding: var(--space-3) var(--space-4);
+}
+.op-menu-pager {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+.op-menu-pager .op-menu-pager-btn {
+  width: 24px; height: 24px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 0;
+  background: transparent;
+  color: var(--text-tertiary);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+.op-menu-pager .op-menu-pager-btn:hover {
+  background: color-mix(in srgb, var(--text-primary) 6%, transparent);
+  color: var(--text-primary);
+}
+.op-menu-pager .op-menu-pager-btn:disabled {
+  color: var(--text-disabled);
+  cursor: default;
+  background: transparent;
+}
+.op-menu-search {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+.op-menu-search input {
+  width: 100%;
+  height: 28px;
+  box-sizing: border-box;
+  padding: 0 var(--space-7, 28px) 0 var(--space-3);
+  border: 1px solid var(--border-default);
+  border-radius: var(--border-radius-md);
+  background: var(--surface-raised);
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  outline: none;
+}
+.op-menu-search input::placeholder { color: var(--text-tertiary); }
+.op-menu-search input:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--border-focus) 25%, transparent);
+}
+.op-menu-search-clear {
+  position: absolute;
+  right: var(--space-1);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px; height: 22px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 0; background: transparent;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  border-radius: var(--border-radius);
+}
+.op-menu-search-clear:hover { color: var(--text-primary); }
+
+.op-menu-body { padding: var(--space-2) 0; }
+.op-menu--mega .op-menu-body {
+  padding: var(--space-3) var(--space-4) var(--space-4);
+}
+.op-menu-group { padding: var(--space-1) 0; }
+.op-menu-group + .op-menu-group { padding-top: var(--space-1); }
+.op-menu-group-label {
+  display: block;
+  padding: var(--space-2) var(--space-3) var(--space-1);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+.op-menu--mega .op-menu-group-label {
+  padding: 0 0 var(--space-2);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+.op-menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  margin: 0 var(--space-1);
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-tight);
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: var(--border-radius-md);
+}
+.op-menu-item > i.fas,
+.op-menu-item > i.far,
+.op-menu-item > i.fab {
+  width: 16px;
+  color: var(--text-link);
+  font-size: 14px;
+  text-align: center;
+  flex: 0 0 auto;
+}
+.op-menu-item:hover {
+  background: color-mix(in srgb, var(--text-primary) 5%, transparent);
+}
+.op-menu-item.is-active,
+.op-menu-item[aria-current="true"] {
+  color: var(--text-link);
+  font-weight: var(--font-weight-semibold);
+}
+.op-menu-item.is-action {
+  color: var(--text-link);
+  font-weight: var(--font-weight-medium);
+}
+.op-menu-divider {
+  border: 0;
+  height: 1px;
+  background: var(--border-subtle);
+  margin: var(--space-2) 0;
+}
+.op-menu--mega .op-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-6) var(--space-8);
+}
+.op-menu--mega .op-menu-item {
+  padding: 6px 0;
+  align-items: flex-start;
+  line-height: var(--line-height-normal);
+}
+.op-menu--mega .op-menu-item:hover {
+  background: transparent;
+  color: var(--text-link);
+}
+.op-menu--mega .op-menu-item > i.fas,
+.op-menu--mega .op-menu-item > i.far { margin-top: 2px; }

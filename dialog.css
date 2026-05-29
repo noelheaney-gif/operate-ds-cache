@@ -1,0 +1,95 @@
+/* ============================================================
+   OPERATE DS — DIALOG
+   Source: operate-design-system-builder/index.html (authoritative)
+   Regenerated: 2026-05-29 — verbatim from source
+   ============================================================ */
+/* ─── Components: Dialogs (op-dialog) ───
+   Neutral chrome by default. Warning and Danger variants prepend a small
+   coloured icon before the header title — the rest of the dialog stays
+   neutral. Footer action button colour matches the variant's intent
+   (default = primary, danger = danger; warning is still primary because
+   the action itself isn't destructive). */
+.op-dialog-stage {
+  background: rgba(31,35,41,0.18);
+  padding: 24px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+}
+.op-dialog {
+  background: var(--surface-raised);
+  border-radius: var(--border-radius-lg, 8px);
+  box-shadow: var(--shadow-tooltip);
+  width: 100%;
+  max-width: 360px;
+  overflow: hidden;
+  font-family: var(--font-body);
+}
+.op-dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.op-dialog-header-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  font-size: var(--font-size-md);
+}
+.op-dialog--warning .op-dialog-header-icon { color: var(--state-warning-fg); }
+.op-dialog--danger  .op-dialog-header-icon { color: var(--state-danger-fg); }
+.op-dialog-title {
+  flex: 1;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+  line-height: var(--line-height-tight);
+}
+.op-dialog-close {
+  background: transparent;
+  border: 0;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  font-size: var(--font-size-lg);
+  line-height: 1;
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+}
+.op-dialog-close:hover {
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  color: var(--text-primary);
+}
+.op-dialog-body {
+  padding: 16px;
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  line-height: var(--line-height-normal);
+}
+.op-dialog-body code {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: var(--font-size-sm);
+  background: var(--surface-sunken);
+  color: var(--text-secondary);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.op-dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border-subtle);
+}

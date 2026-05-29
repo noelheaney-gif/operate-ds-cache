@@ -1,0 +1,45 @@
+/* ============================================================
+   OPERATE DS — ICON
+   Source: operate-design-system-builder/index.html (authoritative)
+   Regenerated: 2026-05-29 — verbatim from source
+   ============================================================ */
+/* ─── Components: Icons (op-icon) ─── */
+.op-icon-cell {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: var(--space-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  min-width: 96px;
+  background: var(--surface-raised);
+}
+.op-icon-cell i { color: var(--text-tertiary); }
+.op-icon-cell-label {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+}
+.op-icon-size {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: var(--space-3);
+  min-width: 80px;
+}
+.op-icon-size i { color: var(--text-secondary); }
+.op-icon-size-label {
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+.op-icon-tone {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+.op-icon-tone i { font-size: var(--font-size-md); }

@@ -1,0 +1,103 @@
+/* ============================================================
+   OPERATE DS — ROLL UP CARD WIDGET
+   Source: operate-design-system-builder/index.html (authoritative)
+   Regenerated: 2026-05-29 — verbatim from source
+   ============================================================ */
+/* ─── Widgets: Roll Up Card (op-widget-summary) ───
+   Single-stat roll up card. Coloured left rail + matching icon disc are
+   fully customizable per use; the layout (link-styled title, value, disc
+   icon, overflow menu) stays constant. */
+.op-widget-summary {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  background: var(--surface-raised);
+  border-radius: var(--border-radius-lg, 8px);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-2) var(--space-3);
+  min-height: 84px;
+  border-left: 4px solid var(--green-500);
+  max-width: 320px;
+  font-family: var(--font-body);
+}
+.op-widget-summary--info    { border-left-color: var(--blue-500); }
+.op-widget-summary--success { border-left-color: var(--green-500); }
+.op-widget-summary--warning { border-left-color: var(--amber-500); }
+.op-widget-summary--danger  { border-left-color: var(--red-500); }
+.op-widget-summary--neutral { border-left-color: var(--neutral-400); }
+
+.op-widget-summary-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+.op-widget-summary-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-regular);
+  color: var(--text-link);
+  text-decoration: none;
+  line-height: var(--line-height-tight);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.op-widget-summary-title:hover { text-decoration: underline; text-underline-offset: 2px; }
+.op-widget-summary-menu {
+  background: transparent;
+  border: 0;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-base);
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+}
+.op-widget-summary-menu:hover { background: var(--surface-page); color: var(--text-primary); }
+
+.op-widget-summary-body {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.op-widget-summary-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-inverse);
+  font-size: var(--font-size-sm);
+  flex-shrink: 0;
+}
+.op-widget-summary--success .op-widget-summary-icon { background: var(--green-500); }
+.op-widget-summary--info    .op-widget-summary-icon { background: var(--blue-500); }
+.op-widget-summary--warning .op-widget-summary-icon { background: var(--amber-500); }
+.op-widget-summary--danger  .op-widget-summary-icon { background: var(--red-500); }
+.op-widget-summary--neutral .op-widget-summary-icon { background: var(--neutral-500); }
+.op-widget-summary-value {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+  line-height: var(--line-height-tight);
+  font-variant-numeric: tabular-nums;
+}
+/* Roll Up Card grid — 4 → 2 → 1, never 3-up, never orphan. */
+.op-rollup-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+@media (max-width: 900px) { .op-rollup-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 540px) { .op-rollup-grid { grid-template-columns: 1fr; } }

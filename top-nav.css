@@ -1,147 +1,57 @@
 /* ============================================================
-   OPERATE DS — TOP NAVIGATION CSS
-   Source: operate-shell-components.netlify.app/#top-nav
-   Status: ⚠️ Needs Chrome verification against live DS
-   TODO: Connect Chrome and verify every value below against
-         the rendered component at operate-shell-components.netlify.app/#top-nav
+   OPERATE DS — TOP NAV
+   Source: operate-design-system-builder/index.html (authoritative)
+   Regenerated: 2026-05-29 — verbatim from source
    ============================================================ */
-
+/* ─── Scoped Top Nav styles (lifted from current/index.html) ─── */
 .top-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 200;
-  height: var(--topnav-height);
-  background: var(--surface-brand);
+  position: static;
+  height: 56px;
+  background: #054F7E;
   display: flex;
   align-items: center;
-  padding: 0 var(--space-4);
-  gap: var(--space-3);
-  box-shadow: 0 1px 0 rgba(0,0,0,0.12);
+  padding: 0 16px;
+  gap: 0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+  border-radius: 4px;
 }
-
 .top-nav-logo {
   display: flex;
   align-items: center;
+  text-decoration: none;
   flex-shrink: 0;
-  margin-right: var(--space-2);
-}
-.top-nav-logo img {
-  height: 28px;
-  width: auto;
-  display: block;
-}
-
-/* Search */
-.top-nav-search {
-  flex: 1;
-  max-width: 480px;
-  display: flex;
-  align-items: center;
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 6px;
-  overflow: hidden;
-  transition: border-color 0.15s, background 0.15s;
-}
-.top-nav-search:focus-within {
-  background: rgba(255,255,255,0.18);
-  border-color: rgba(255,255,255,0.4);
-}
-.top-nav-search-scope {
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
-  padding: 0 var(--space-3);
-  color: var(--text-inverse-soft);
-  font-size: var(--font-size-sm);
-  border-right: 1px solid rgba(255,255,255,0.2);
-  height: 32px;
-  white-space: nowrap;
+  margin-right: 16px;
+  /* Aligns the logo image with the side nav active item background at x=14
+     from the viewport edge. Top-nav padding-left (16) + this margin (-8)
+     + logo padding-left (6) = 14. */
+  margin-left: -8px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: background 0.15s, opacity 0.15s;
   cursor: pointer;
 }
-.top-nav-search-scope:hover { color: var(--text-inverse); }
-.top-nav-search-scope .chevron { font-size: 9px; }
-.top-nav-search input {
-  flex: 1;
-  border: none;
-  background: transparent;
-  color: var(--text-inverse);
-  padding: 0 var(--space-3);
-  font-size: var(--font-size-sm);
-  font-family: inherit;
-  outline: none;
-  height: 32px;
-  min-width: 0;
+.top-nav-logo:hover {
+  background: rgba(255,255,255,0.08);
 }
-.top-nav-search input::placeholder { color: var(--text-inverse-muted); }
+.top-nav-logo:active {
+  background: rgba(255,255,255,0.14);
+}
+.top-nav-logo img { height: 30px; width: auto; }
 
-/* Actions */
-.top-nav-actions {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
-}
-.top-nav-icon-btn {
-  position: relative;
-  width: 36px;
-  height: 36px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-inverse-soft);
-  font-size: var(--font-size-base);
-  transition: background 0.15s, color 0.15s;
-}
-.top-nav-icon-btn:hover {
-  background: var(--overlay-hover-dark);
-  color: var(--text-inverse);
-}
-
-/* Notification badge */
-.top-nav-icon-btn .op-badge--danger {
+/* ─── Top-nav notification indicator (scoped to .top-nav-icon-btn) ───
+   This is the data-count-driven dot anchored to the bell. Kept distinct
+   from the generic .op-badge below by living under .top-nav-icon-btn. */
+.top-nav-icon-btn { position: relative; overflow: visible; }
+.top-nav-icon-btn .op-badge {
   position: absolute;
-  top: 3px;
-  right: 3px;
+  top: -3px;
+  left: calc(100% - 12px);
   min-width: 16px;
   height: 16px;
-  font-size: 9px;
-  padding: 0 3px;
-  border-radius: 8px;
-  background: var(--red-500);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: var(--font-weight-semibold);
-  pointer-events: none;
-}
-.top-nav-icon-btn .op-badge--danger::after { content: attr(data-count); }
-
-/* Tooltips on top nav */
-.top-nav-actions .has-tooltip { position: relative; }
-.top-nav-actions .tooltip {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--neutral-900);
-  color: #fff;
+  padding: 0 5px;
+  border-radius: 999px;
   font-size: var(--font-size-xs);
-  white-space: nowrap;
-  padding: 4px 8px;
-  border-radius: 4px;
-  box-shadow: var(--shadow-tooltip);
+  box-shadow: 0 0 0 1.5px #054F7E;
   pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.15s;
-  z-index: 500;
 }
-.top-nav-actions .has-tooltip:hover .tooltip { opacity: 1; }
-.top-nav-actions .has-tooltip:last-child .tooltip,
-.top-nav-actions .has-tooltip--end .tooltip {
-  left: auto;
-  right: 0;
-  transform: none;
-}
+.top-nav-icon-btn .op-badge::before { content: attr(data-count); }

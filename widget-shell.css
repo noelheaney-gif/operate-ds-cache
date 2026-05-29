@@ -1,89 +1,174 @@
 /* ============================================================
-   OPERATE DS — WIDGET SHELL CSS
-   Covers the collapsible widget container used by:
-   - Radar (always ships collapsed)
-   - List View (ships expanded)
-   These are TWO SEPARATE INDEPENDENT widgets. Never nest one inside the other.
-   Status: ⚠️ Needs Chrome verification
+   OPERATE DS — WIDGET SHELL + RADAR
+   Source: operate-design-system-builder/index.html (authoritative)
+   Regenerated: 2026-05-29 — verbatim from source
    ============================================================ */
-
+/* ─── Widgets: Generic widget shell + Radar (op-widget / op-widget-radar) ─── */
 .op-widget {
   background: var(--surface-raised);
-  border: 1px solid var(--border-default);
-  border-radius: 8px;
+  border-radius: var(--border-radius-lg, 8px);
+  box-shadow: var(--shadow-card);
+  font-family: var(--font-body);
   overflow: hidden;
-  box-shadow: var(--shadow-card-sm);
-  margin-bottom: var(--space-4);
 }
-
-/* Widget header — dark bar, full-width click target */
 .op-widget-header {
   display: flex;
   align-items: center;
-  background: var(--neutral-700);
-  padding: 0 var(--space-4);
-  min-height: 40px;
-  cursor: pointer;
-  user-select: none;
-  gap: var(--space-2);
-  transition: background 0.15s;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
 }
-.op-widget-header:hover { background: var(--neutral-600); }
-
 .op-widget-title {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-inverse);
-  flex: 1;
-}
-
-/* Header action buttons (Refresh, Filter, etc) — click must NOT collapse widget */
-.op-widget-header-actions {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: var(--space-1);
+  gap: var(--space-2);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
 }
-.op-widget-header-btn {
+.op-widget-title i { color: var(--text-tertiary); }
+.op-widget-ctrl {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: var(--text-tertiary);
   width: 28px;
   height: 28px;
-  border-radius: 4px;
-  display: flex;
+  border-radius: 6px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-inverse-muted);
   font-size: var(--font-size-sm);
   transition: background 0.15s, color 0.15s;
 }
-.op-widget-header-btn:hover {
-  background: var(--overlay-hover-dark);
-  color: var(--text-inverse);
-}
-
-/* Chevron — only this collapses when widget is expanded */
-.op-widget-chevron {
-  color: var(--text-inverse-muted);
+.op-widget-ctrl:hover { background: var(--surface-page); color: var(--text-primary); }
+/* Rollover label for every widget icon button — same pattern across .op-widget-ctrl
+   and .op-widget-summary-menu so users can always discover what an icon does. */
+/* Right-side cluster of widget icon controls (more options + collapse) */
+.op-widget-controls { display: inline-flex; gap: 2px; align-items: center; }
+/* Collapsed state: hide body, drop the header divider so it reads as a single bar */
+.op-widget.is-collapsed .op-widget-header { border-bottom: 0; }
+/* Collapsed widgets: whole header is clickable to expand (more discoverable
+   than hunting for the chevron). Click handler is wired up at the bottom. */
+.op-widget.is-collapsed > .op-widget-header { cursor: pointer; }
+.op-widget.is-collapsed .op-radar-panels,
+.op-widget.is-collapsed .op-summary-chart,
+.op-widget.is-collapsed .op-summary-legend,
+.op-widget.is-collapsed .op-list-table,
+.op-widget.is-collapsed .op-widget-empty { display: none; }
+.op-widget-ctrl, .op-widget-summary-menu { position: relative; }
+.op-widget-ctrl .tooltip, .op-widget-summary-menu .tooltip {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface-raised);
+  color: var(--text-primary);
   font-size: var(--font-size-sm);
-  transition: transform 0.2s ease;
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  padding: 6px 10px;
+  border-radius: 4px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  box-shadow: var(--shadow-tooltip);
+  z-index: 200;
+}
+.op-widget-ctrl:hover .tooltip,
+.op-widget-summary-menu:hover .tooltip { opacity: 1; }
+
+/* Summary widget — horizontal bar chart. SVG handles the bars + gridlines
+   (so they scale with width); HTML wraps the axis labels so they pick up
+   the type-scale tokens for size rather than viewBox units. */
+.op-summary-chart {
+  padding: var(--space-4);
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 6px;
+}
+.op-summary-yaxis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 4px 0 18px;
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  line-height: 1;
+}
+.op-summary-plot { display: flex; flex-direction: column; gap: 4px; }
+.op-summary-svg {
+  display: block;
+  width: 100%;
+  height: 160px;
+}
+.op-summary-svg .gridline { stroke: var(--neutral-200); stroke-width: 1; }
+.op-summary-svg .bar--current  { fill: var(--blue-500); }
+.op-summary-svg .bar--previous { fill: var(--blue-300); }
+.op-summary-svg .bar--target   { fill: var(--blue-100); }
+.op-summary-xaxis {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.op-summary-legend {
+  display: flex;
+  gap: var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  flex-wrap: wrap;
+}
+.op-summary-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.op-summary-legend-swatch {
+  width: 12px;
+  height: 4px;
+  border-radius: 2px;
   flex-shrink: 0;
 }
 
-/* Collapsed state — body hidden, chevron points down */
-.op-widget .op-widget-body { display: none; }
-.op-widget.is-collapsed .op-widget-chevron { transform: rotate(0deg); }
-
-/* Expanded state — body visible, chevron points up */
-.op-widget.is-expanded .op-widget-body { display: block; }
-.op-widget.is-expanded .op-widget-chevron { transform: rotate(180deg); }
-
-/* Radar ships collapsed — add is-collapsed class by default */
-/* List View ships expanded — add is-expanded class by default */
-
-/* Widget body */
-.op-widget-body {
-  background: var(--surface-raised);
+/* Radar — 3 chart panels in a row, divided by hairlines */
+.op-radar-panels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
 }
-
-/* Page layout — content padding */
-.page-content {
-  padding: var(--space-6);
+@media (max-width: 700px) { .op-radar-panels { grid-template-columns: 1fr; } }
+.op-radar-panel {
+  padding: var(--space-4);
+  border-right: 1px solid var(--border-subtle);
+}
+.op-radar-panel:last-child { border-right: 0; }
+.op-radar-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+}
+.op-radar-panel-title { flex: 1; text-align: center; }
+.op-radar-chart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-2) 0;
+  min-height: 120px;
+}
+.op-radar-donut {
+  width: 110px;
+  height: 110px;
 }

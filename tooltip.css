@@ -1,0 +1,84 @@
+/* ============================================================
+   OPERATE DS — TOOLTIP
+   Source: operate-design-system-builder/index.html (authoritative)
+   Regenerated: 2026-05-29 — verbatim from source
+   ============================================================ */
+/* ─── Components: Tooltip (op-tooltip) ───
+   Hover/focus-triggered help text. Always supplementary — never a primary
+   affordance. Auto-docks to the right edge when the trigger is the last
+   child of a `.top-nav-actions`-style container, so it never clips.
+   Use `.has-tooltip--end` to force right-dock on any trigger near an edge. */
+.op-tooltip-host { position: relative; display: inline-flex; }
+.op-tooltip {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface-raised);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+  white-space: nowrap;
+  max-width: 280px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  box-shadow: var(--shadow-tooltip);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 200;
+}
+.op-tooltip::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-bottom-color: var(--surface-raised);
+}
+.op-tooltip-host:hover .op-tooltip,
+.op-tooltip-host:focus-within .op-tooltip { opacity: 1; }
+/* Right-dock — anchor to trigger's right edge so the tooltip can't clip
+   past the viewport. Use on any trigger close to a container's right edge. */
+.has-tooltip--end .op-tooltip,
+.op-tooltip-host.has-tooltip--end .op-tooltip,
+.top-nav-actions .has-tooltip:last-child .op-tooltip,
+.top-nav-actions .op-tooltip-host:last-child .op-tooltip {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+.has-tooltip--end .op-tooltip::before,
+.op-tooltip-host.has-tooltip--end .op-tooltip::before,
+.top-nav-actions .has-tooltip:last-child .op-tooltip::before,
+.top-nav-actions .op-tooltip-host:last-child .op-tooltip::before {
+  left: auto;
+  right: 10px;
+  transform: none;
+}
+/* Left-dock — opposite of end; anchor to trigger's left edge. */
+.has-tooltip--start .op-tooltip {
+  left: 0;
+  right: auto;
+  transform: none;
+}
+.has-tooltip--start .op-tooltip::before {
+  left: 10px;
+  right: auto;
+  transform: none;
+}
+/* Apply the same edge-docking rules to the legacy `.tooltip` markup so
+   existing usages benefit without a markup change. */
+.top-nav-actions .has-tooltip:last-child .tooltip {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+.top-nav-actions .has-tooltip:last-child .tooltip::before {
+  left: auto;
+  right: 10px;
+  transform: none;
+}

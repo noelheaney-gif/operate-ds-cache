@@ -1,0 +1,69 @@
+/* ============================================================
+   OPERATE DS — CARD
+   Source: operate-design-system-builder/index.html (authoritative)
+   Regenerated: 2026-05-29 — verbatim from source
+   ============================================================ */
+/* ─── Components: Cards (op-card) ───
+   Single entity-row pattern: a coloured rail on the left signals status
+   (success / info / warning / danger), a tinted icon section, a white
+   title section, and a trailing action section. Rail colour is the only
+   difference between variants. */
+.op-card {
+  display: flex;
+  align-items: stretch;
+  background: var(--surface-raised);
+  border-radius: var(--border-radius-lg, 8px);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  border-left: 4px solid var(--green-500);
+  min-height: 64px;
+  font-family: var(--font-body);
+  max-width: 480px;
+}
+.op-card--info    { border-left-color: var(--blue-500); }
+.op-card--success { border-left-color: var(--green-500); }
+.op-card--warning { border-left-color: var(--amber-500); }
+.op-card--danger  { border-left-color: var(--red-500); }
+.op-card-status {
+  width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-sunken);
+  color: var(--text-tertiary);
+  font-size: var(--font-size-xl);
+  flex-shrink: 0;
+}
+.op-card-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-5);
+  min-width: 0;
+  background: var(--surface-raised);
+}
+.op-card-content strong {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  line-height: var(--line-height-tight);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.op-card-action {
+  width: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-sunken);
+  color: var(--text-link);
+  text-decoration: none;
+  font-size: var(--font-size-md);
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+}
+.op-card-action:hover {
+  background: var(--neutral-300);
+  color: var(--action-primary-active);
+}

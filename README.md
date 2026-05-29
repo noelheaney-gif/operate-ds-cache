@@ -1,46 +1,77 @@
 # operate-ds-cache
 
-Cached CSS and HTML snippets for the Operate Design System, used by the `operate-prototype-builder` Cowork skill.
+Per-component CSS/HTML cache for the Operate Design System, used by the `operate-prototype-builder` Cowork skill.
 
 ## Purpose
 
-The main DS reference site (`operate-shell-components.netlify.app/llms.txt`) is too large to fetch reliably — the base64 avatar data causes responses to truncate before the CSS blocks are reached. This repo breaks the DS into small individual files so the skill can fetch exactly what it needs, reliably, every time.
+This repo breaks the Operate DS into small individual files so the skill can fetch exactly what it needs, reliably, every time — without depending on a large single-page source that truncates on fetch.
 
-## How it works
+## Source of truth
+
+These files are derived **verbatim** from the authoritative DS source: the `index.html` Operate DS builder (the file previously deployed to Netlify). That `index.html` is now the single source of truth. The old `operate-shell-components.netlify.app/llms.txt` reference is retired and should no longer be used.
+
+When the DS changes:
+1. Update the authoritative `index.html`.
+2. Re-run the extraction against it (see "Regenerating" below).
+3. Commit the updated component files here.
+
+## How the skill uses it
 
 The skill fetches each file individually using raw GitHub URLs:
+
 ```
-https://raw.githubusercontent.com/YOUR-ORG/operate-ds-cache/main/tokens.css
-https://raw.githubusercontent.com/YOUR-ORG/operate-ds-cache/main/top-nav.css
+https://raw.githubusercontent.com/noelheaney-gif/operate-ds-cache/main/tokens.css
+https://raw.githubusercontent.com/noelheaney-gif/operate-ds-cache/main/top-nav.css
 ... etc
 ```
 
-## Keeping this up to date
-
-When the DS site is updated:
-1. Go to `operate-shell-components.netlify.app`
-2. Find the updated component section
-3. Copy the CSS and HTML snippets verbatim
-4. Update the relevant file here and commit
-
 ## Files
 
-| File | Contents | Status |
-|------|----------|--------|
-| `tokens.css` | Full `:root` DS token block | ✅ Verified from llms.txt |
-| `top-nav.css` | Top navigation CSS | ⚠️ Needs Chrome verification |
-| `top-nav.html` | Top navigation HTML snippet | ✅ Verified from llms.txt |
-| `sidebar.css` | Side navigation CSS | ⚠️ Needs Chrome verification |
-| `sidebar.html` | Side navigation HTML snippet (Emily Carl persona) | ⚠️ Needs Chrome verification |
-| `page-header.css` | Page header CSS | ⚠️ Needs Chrome verification |
-| `page-header.html` | Page header HTML snippet | ⚠️ Needs Chrome verification |
-| `widget-shell.css` | Widget shell (collapsible container) CSS | ⚠️ Needs Chrome verification |
-| `list-view.css` | List view / table CSS | ⚠️ Needs Chrome verification |
-| `list-view.html` | List view HTML snippet | ⚠️ Needs Chrome verification |
-| `buttons.css` | Button component CSS | ⚠️ Needs Chrome verification |
+### Foundation
+| File | Contents |
+| --- | --- |
+| `tokens.css` | Full `:root` DS token block (primitives + semantic tokens) |
 
-## Verification status
+### Shell
+| File | Contents |
+| --- | --- |
+| `top-nav.css` / `top-nav.html` | Top navigation |
+| `sidebar.css` / `sidebar.html` | Side navigation (default variant, Emily Carl persona) |
+| `page-header.css` / `page-header.html` | Page header |
 
-Files marked ⚠️ were built from DS token knowledge and patterns. They should be verified against the live DS site using Claude in Chrome before being used in customer-facing prototypes.
+### Widgets
+| File | Contents |
+| --- | --- |
+| `widget-shell.css` | Generic widget shell + Radar |
+| `list-view.css` / `list-view.html` | List view widget |
+| `rollup-card.css` | Roll Up Card widget |
+| `empty-state.css` | "Nothing to display" empty state |
 
-To verify: open Chrome, connect Claude in Chrome, and ask: "Please fetch the CSS for the [component] from operate-shell-components.netlify.app and compare it against the file at [path]. Update the file if anything differs."
+### Components
+| File | Contents |
+| --- | --- |
+| `buttons.css` | Buttons (`op-btn`) |
+| `badge.css` | Badge (`op-badge`) + top-nav notification badge |
+| `avatar.css` | Avatar (`op-avatar`) |
+| `icon.css` | Icons (`op-icon`) |
+| `input.css` | Inputs (`op-input`) |
+| `checkbox.css` | Checkbox (`op-checkbox`) |
+| `switch.css` | Switch (`op-switch`) |
+| `counter.css` | Counters (`op-counter`) |
+| `pill.css` | Pills / chips (`op-pill`) |
+| `alert.css` | Alerts (`op-alert`) |
+| `card.css` | Cards (`op-card`) |
+| `dialog.css` | Dialogs (`op-dialog`) |
+| `toast.css` | Toasts (`op-toast`) |
+| `tooltip.css` | Tooltip (`op-tooltip`) |
+| `menu.css` | Menu (`op-menu`) |
+
+## Notes for prototype use
+
+- **Scoping:** sidebar CSS was scoped to `.story-stage` in the source showcase. That wrapper has been removed here so the styles apply directly in a prototype. Other component CSS was already unscoped.
+- **Avatar:** `sidebar.html` references `emily-carl-avatar.jpg` (a relative path from the source). For a self-contained prototype, replace this with a base64 data URI or host the image alongside the prototype.
+- **Showcase chrome excluded:** story tags, component-grid cards, copy buttons, the showcase's own routing/sidenav, and the shell diagram are showcase-only and are intentionally NOT in this cache.
+
+## Regenerating
+
+All files are extracted from the authoritative `index.html` by section boundary, dedented from the `<style>`/markup indentation, and stripped of the `.story-stage` showcase wrapper. Re-run the extraction whenever `index.html` changes, then verify brace balance and commit.

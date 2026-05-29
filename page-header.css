@@ -1,48 +1,220 @@
 /* ============================================================
-   OPERATE DS — PAGE HEADER CSS
-   Source: operate-shell-components.netlify.app/#page-header
-   Status: ⚠️ Needs Chrome verification
+   OPERATE DS — PAGE HEADER
+   Source: operate-design-system-builder/index.html (authoritative)
+   Regenerated: 2026-05-29 — verbatim from source
    ============================================================ */
-
+/* ─── Page Header (op-shell-page-header) ─── */
 .op-page-header {
   background: var(--surface-raised);
   border-bottom: 1px solid var(--border-subtle);
-  padding: var(--space-4) var(--space-6);
+  padding: 8px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  min-height: 48px;
+  font-family: var(--font-body);
+}
+.op-page-header-row {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  /* Bleeds to full content width — use negative margin if inside padded container */
-  margin: calc(-1 * var(--space-6));
-  margin-bottom: var(--space-6);
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 32px;
 }
-
+.op-page-header-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.op-page-header-crumbs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+  line-height: var(--line-height-tight);
+}
+/* Breadcrumb anchors use --text-tertiary, not --text-link.
+   This is a documented exception to the "all links use --text-link" rule —
+   breadcrumbs are page chrome rather than in-content actionable links.
+   Final atomic spec for this exception lives in the Atomic specs section. */
+.op-page-header-crumbs a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-tertiary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.op-page-header-crumbs a:hover {
+  color: var(--text-primary);
+}
+.op-page-header-crumbs i {
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+}
+.op-page-header-crumbs a i { color: inherit; }
+.op-page-header-crumbs .crumb-sep {
+  color: var(--neutral-400);
+  font-size: var(--font-size-sm);
+}
+/* Uses type-heading-sm tokens: 16px / semibold / tight (single-line page title) */
 .op-page-header-title {
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-bold);
   color: var(--text-primary);
-  flex: 1;
+  letter-spacing: -0.1px;
   line-height: var(--line-height-tight);
+  margin: 0;
 }
-
 .op-page-header-actions {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 2px;
+  flex-wrap: nowrap;
 }
-
-.op-page-header-icon-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
-  display: flex;
+.op-page-action {
+  position: relative;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font-body);
   color: var(--text-tertiary);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
   transition: background 0.15s, color 0.15s;
-  position: relative;
 }
-.op-page-header-icon-btn:hover {
-  background: var(--surface-sunken);
+.op-page-action:hover {
+  background: var(--surface-page);
   color: var(--text-primary);
+}
+.op-page-action:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+.op-page-action.is-active {
+  background: var(--surface-brand-subtle);
+  color: var(--action-primary);
+}
+/* Tooltip for icon-only actions — appears below the button on hover */
+.op-page-action .tooltip {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  padding: 6px 10px;
+  border-radius: 4px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  box-shadow: 0 4px 8px 0 rgba(81,101,120,0.16), 0 1px 3px 0 rgba(60,78,98,0.08);
+  z-index: 200;
+}
+.op-page-action .tooltip::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-bottom-color: white;
+}
+.op-page-action:hover .tooltip { opacity: 1; }
+/* Edge-of-row tooltips: anchor right so they don't overflow */
+.op-page-header-actions > .op-page-action:last-child .tooltip,
+.op-page-header-actions > .op-page-action:nth-last-child(2) .tooltip {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+.op-page-header-actions > .op-page-action:last-child .tooltip::before,
+.op-page-header-actions > .op-page-action:nth-last-child(2) .tooltip::before {
+  left: auto;
+  right: 12px;
+  transform: none;
+}
+
+/* ─── Page Content (op-shell-page-content) ───
+   The grey canvas inside the shell, hosting white cards in a masonry
+   column layout. Widgets themselves are NOT specified at this layer —
+   they're whatever shape a workspace page needs. The frame only
+   defines the canvas + masonry + card surface. */
+.op-frame-preview {
+  border: 1px solid var(--border-default);
+  border-radius: var(--border-radius-lg, 8px);
+  overflow: hidden;
+  background: var(--surface-page);
+  font-family: var(--font-body);
+}
+.op-frame-canvas {
+  padding: 20px;
+  columns: 3;
+  column-gap: 16px;
+}
+@media (max-width: 900px) {
+  .op-frame-canvas { columns: 2; }
+}
+@media (max-width: 600px) {
+  .op-frame-canvas { columns: 1; }
+}
+.op-frame-widget {
+  background: var(--surface-raised);
+  border-radius: var(--border-radius-lg, 8px);
+  box-shadow: var(--shadow-card);
+  break-inside: avoid;
+  margin: 0 0 16px;
+  min-height: 96px;
+}
+
+/* ─── Page Header — Focused variant ───
+   Same white surface and typography as Basic/Complex. Adds an
+   optional mark on the left and a short description beneath the
+   title. Single primary action follows the icon + tooltip pattern. */
+.op-focused-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.op-focused-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: var(--text-primary);
+  font-size: var(--font-size-md);
+  flex-shrink: 0;
+}
+.op-focused-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.op-focused-title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  letter-spacing: -0.1px;
+  line-height: var(--line-height-tight);
+  margin: 0;
+}
+.op-focused-desc {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-regular);
+  color: var(--text-tertiary);
+  line-height: var(--line-height-tight);
 }

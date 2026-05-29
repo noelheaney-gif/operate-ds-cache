@@ -1,0 +1,70 @@
+/* ============================================================
+   OPERATE DS — INPUT
+   Source: operate-design-system-builder/index.html (authoritative)
+   Regenerated: 2026-05-29 — verbatim from source
+   ============================================================ */
+/* ─── Components: Inputs (op-input) ─── */
+.op-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 320px;
+}
+.op-label {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+.op-label-required { color: var(--text-danger); }
+.op-input {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  background: var(--surface-raised);
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  box-sizing: border-box;
+}
+.op-input:hover { border-color: var(--border-strong); }
+.op-input:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(29, 99, 150, 0.20);
+}
+.op-input::placeholder { color: var(--text-disabled); }
+.op-input[disabled] {
+  background: var(--action-disabled-bg);
+  color: var(--action-disabled-fg);
+  cursor: not-allowed;
+  border-color: var(--border-default);
+}
+.op-input.is-error,
+.op-input.is-error:hover { border-color: var(--border-danger); }
+.op-input.is-error:focus { box-shadow: 0 0 0 3px rgba(214, 51, 67, 0.20); }
+.op-help {
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+  line-height: var(--line-height-normal);
+}
+.op-help--error { color: var(--text-danger); }
+.op-input-search {
+  position: relative;
+  width: 100%;
+}
+.op-input-search .op-input { padding-left: 36px; }
+.op-input-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+  pointer-events: none;
+  font-size: var(--font-size-base);
+}

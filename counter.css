@@ -1,0 +1,41 @@
+/* ============================================================
+   OPERATE DS — COUNTER
+   Source: operate-design-system-builder/index.html (authoritative)
+   Regenerated: 2026-05-29 — verbatim from source
+   ============================================================ */
+/* ─── Components: Counters (op-counter) — number badges + status dots ─── */
+.op-counter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  color: var(--text-inverse);
+  background: var(--action-danger);
+  letter-spacing: 0;
+  box-sizing: border-box;
+}
+.op-counter--info    { background: var(--action-primary); }
+.op-counter--success { background: var(--green-500); }
+.op-counter--warning { background: var(--amber-500); color: var(--text-primary); }
+.op-counter--neutral { background: var(--neutral-500); }
+.op-counter--inverse { background: var(--surface-raised); color: var(--text-primary); }
+.op-counter--lg { min-width: 22px; height: 22px; font-size: 11px; padding: 0 7px; }
+.op-counter-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--action-danger);
+  flex-shrink: 0;
+}
+.op-counter-dot--info    { background: var(--action-primary); }
+.op-counter-dot--success { background: var(--green-500); }
+.op-counter-dot--warning { background: var(--amber-500); }
+.op-counter-dot--neutral { background: var(--neutral-500); }

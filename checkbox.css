@@ -1,0 +1,73 @@
+/* ============================================================
+   OPERATE DS — CHECKBOX
+   Source: operate-design-system-builder/index.html (authoritative)
+   Regenerated: 2026-05-29 — verbatim from source
+   ============================================================ */
+/* ─── Components: Checkbox (op-checkbox) ─── */
+.op-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  position: relative;
+}
+.op-checkbox input {
+  appearance: none;
+  -webkit-appearance: none;
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  pointer-events: none;
+}
+.op-checkbox-box {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--border-default);
+  border-radius: 4px;
+  background: var(--surface-raised);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-inverse);
+  font-size: 11px;
+  flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s;
+}
+.op-checkbox-box i { visibility: hidden; opacity: 0; transition: opacity 0.1s; }
+.op-checkbox:hover .op-checkbox-box { border-color: var(--border-strong); }
+.op-checkbox input:focus-visible ~ .op-checkbox-box {
+  box-shadow: 0 0 0 3px rgba(29, 99, 150, 0.20);
+}
+.op-checkbox input:checked ~ .op-checkbox-box {
+  background: var(--action-primary);
+  border-color: var(--action-primary);
+}
+.op-checkbox input:checked ~ .op-checkbox-box i { visibility: visible; opacity: 1; }
+.op-checkbox input:disabled ~ .op-checkbox-box {
+  background: var(--action-disabled-bg);
+  border-color: var(--border-default);
+}
+.op-checkbox input:disabled:checked ~ .op-checkbox-box {
+  background: var(--neutral-400);
+  border-color: var(--neutral-400);
+}
+.op-checkbox input:disabled ~ .op-checkbox-label,
+.op-checkbox:has(input:disabled) { color: var(--text-disabled); cursor: not-allowed; }
+/* Indeterminate state — dash glyph via ::after */
+.op-checkbox input:indeterminate ~ .op-checkbox-box {
+  background: var(--action-primary);
+  border-color: var(--action-primary);
+}
+.op-checkbox input:indeterminate ~ .op-checkbox-box i { display: none; }
+.op-checkbox input:indeterminate ~ .op-checkbox-box::after {
+  content: '';
+  width: 8px;
+  height: 1.5px;
+  background: var(--text-inverse);
+  border-radius: 1px;
+}

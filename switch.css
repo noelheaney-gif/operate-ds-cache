@@ -1,0 +1,48 @@
+/* ============================================================
+   OPERATE DS — SWITCH
+   Source: operate-design-system-builder/index.html (authoritative)
+   Regenerated: 2026-05-29 — verbatim from source
+   ============================================================ */
+/* ─── Components: Switch (op-switch) ─── */
+.op-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  position: relative;
+}
+.op-switch input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.op-switch-track {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  background: var(--neutral-400);
+  border-radius: 999px;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.op-switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: var(--surface-raised);
+  border-radius: 50%;
+  box-shadow: var(--shadow-card-sm);
+  transition: transform 0.18s ease;
+}
+.op-switch input:focus-visible ~ .op-switch-track {
+  box-shadow: 0 0 0 3px rgba(29, 99, 150, 0.20);
+}
+.op-switch input:checked ~ .op-switch-track { background: var(--action-primary); }
+.op-switch input:checked ~ .op-switch-track .op-switch-thumb { transform: translateX(16px); }
+.op-switch input:disabled ~ .op-switch-track { background: var(--action-disabled-bg); cursor: not-allowed; }
+.op-switch:has(input:disabled) { cursor: not-allowed; color: var(--text-disabled); }

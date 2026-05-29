@@ -1,224 +1,582 @@
 /* ============================================================
-   OPERATE DS — SIDE NAVIGATION CSS
-   Source: operate-shell-components.netlify.app/#side-nav
-   Status: ⚠️ Needs Chrome verification against live DS
-   TODO: Connect Chrome and verify every value below against
-         the rendered component at operate-shell-components.netlify.app/#side-nav
+   OPERATE DS — SIDE NAV
+   Source: operate-design-system-builder/index.html (authoritative)
+   Regenerated: 2026-05-29 — verbatim from source
    ============================================================ */
-
+/* ═══════════════════════════════════════════════════════════════════════
+   Side Nav (unscoped for prototype use)
+   ═══════════════════════════════════════════════════════════════════════ */
+.sidebar-frame {
+  --sidebar-width: 250px;
+  --sidebar-collapsed-width: 52px;
+  position: relative;
+  height: 640px;
+  background: #F7F7F7;
+  border: 1px solid #dae1e7;
+  border-radius: 6px;
+  overflow: hidden;
+}
 .sidebar {
-  position: fixed;
-  top: var(--topnav-height);
+  position: absolute;
+  top: 0;
   left: 0;
   bottom: 0;
   width: var(--sidebar-width);
-  background: var(--neutral-800);
+  background: #323841;
+  overflow: visible;
   display: flex;
   flex-direction: column;
-  z-index: 100;
-  overflow: hidden;
+  z-index: 2;
   transition: width 0.2s ease;
 }
-
-/* Collapsed state — verbatim from DS */
-.sidebar.collapsed { width: var(--sidebar-collapsed-width); }
-.sidebar.collapsed .sidebar-user { padding: 14px 6px 12px; }
-.sidebar.collapsed .sidebar-user-btns { align-items: center; }
-.sidebar.collapsed .sidebar-user-btn { justify-content: center; gap: 0; padding: 0; }
-.sidebar.collapsed .sub-abbr { display: inline; }
-.sidebar.collapsed .sub-label,
-.sidebar.collapsed .sub-count { display: none; }
-.sidebar.collapsed .sidebar-item { justify-content: center; padding: 10px 0; margin: 3px 8px; gap: 0; }
-.sidebar.collapsed .sidebar-item-label,
-.sidebar.collapsed .sidebar-item-count { display: none; }
-.sidebar.collapsed .sidebar-item i { width: auto; }
-.sidebar.collapsed .sf-item { justify-content: center; gap: 0; }
-.sidebar.collapsed .sf-text { display: none; }
-
-/* Nav scroll area */
 .sidebar-nav {
   flex: 1;
   overflow-y: auto;
-  padding: var(--space-2) 0;
+  overflow-x: hidden;
 }
-.sidebar-nav::-webkit-scrollbar { width: 4px; }
-.sidebar-nav::-webkit-scrollbar-track { background: transparent; }
-.sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+/* Top padding only when there's no user block at the top (e.g. Expansive variant).
+   Same 14px value as .sidebar-user padding-top so all variants begin at the same height. */
+.sidebar-nav:not(:has(.sidebar-user)) {
+  padding-top: 14px;
+}
 
-/* User buttons block */
+/* User block — top padding aligned with the other variants (14px) */
 .sidebar-user {
-  padding: var(--space-3);
-  border-bottom: 1px solid var(--overlay-divider-dark);
-  margin-bottom: var(--space-1);
+  padding: 14px 14px 12px;
 }
+.sidebar-user-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.sidebar-user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1.5px solid rgba(255,255,255,0.4);
+}
+.sidebar-user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.sidebar-user-greeting { color: white; font-size: var(--font-size-base); font-weight: var(--font-weight-bold); }
 .sidebar-user-btns {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: var(--space-3);
 }
 .sidebar-user-btn {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
-  border-radius: 6px;
-  color: var(--text-inverse-soft);
+  gap: 8px;
+  /* horizontal padding matches .sidebar-item padding so the M/T counts
+     right-align with the sub-nav item counts below */
+  padding: 0 14px;
+  height: 36px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: transparent;
+  color: rgba(255,255,255,0.9);
+  font-size: var(--font-size-base);
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background 0.15s;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+.sidebar-user-btn:hover { background: rgba(255,255,255,0.08); }
+.sub-abbr { display: none; font-weight: var(--font-weight-bold); flex-shrink: 0; }
+.sub-label {
+  flex: 1;
+  text-align: left;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sub-count {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
-  transition: background 0.15s;
-  position: relative;
-  width: 100%;
-}
-.sidebar-user-btn:hover {
-  background: var(--overlay-hover-dark);
-  color: var(--text-inverse);
-}
-.sub-abbr {
-  display: none;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
-  background: rgba(255,255,255,0.15);
-  border-radius: 4px;
-  padding: 2px 5px;
-  min-width: 20px;
-  text-align: center;
-}
-.sub-label { flex: 1; text-align: left; }
-.sub-count {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  background: rgba(255,255,255,0.15);
-  border-radius: 10px;
-  padding: 2px 7px;
-  min-width: 26px;
-  text-align: center;
+  color: rgba(255,255,255,0.85);
+  flex-shrink: 0;
 }
 
 /* Nav items */
 .sidebar-item {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-2) var(--space-4);
-  margin: 2px var(--space-2);
-  border-radius: 6px;
-  color: var(--text-inverse-soft);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  transition: background 0.15s, color 0.15s;
-  position: relative;
+  gap: 12px;
+  /* Vertical padding matches .sidebar-user-btn so nav items share the
+     same row height as the M/T buttons above */
+  padding: 10px 14px;
+  margin: 3px 14px;
+  color: #f7f7f7;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-light);
+  letter-spacing: -0.1px;
+  text-decoration: none;
   cursor: pointer;
-}
-.sidebar-item i {
-  width: 16px;
-  text-align: center;
-  font-size: 14px;
-  flex-shrink: 0;
+  /* 1px transparent right border matches .sidebar-user-btn's 1px border,
+     so the count column right-aligns across user block and nav items */
+  border-right: 1px solid transparent;
+  border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+  position: relative;
 }
 .sidebar-item:hover {
-  background: var(--overlay-hover-dark);
-  color: var(--text-inverse);
+  background: rgba(255,255,255,0.07);
+  color: #ffffff;
 }
 .sidebar-item.active {
-  background: rgba(255,255,255,0.14);
-  color: var(--text-inverse);
+  background: #1F2329;
+  color: var(--text-accent-on-dark);
+  font-weight: var(--font-weight-medium);
 }
-.sidebar-item-label { flex: 1; }
+.sidebar-item i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-none);
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+.sidebar-item.active i { opacity: 1; color: var(--text-accent-on-dark); }
+.sidebar-item-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .sidebar-item-count {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-inverse-muted);
-  background: rgba(255,255,255,0.12);
-  border-radius: 10px;
-  padding: 2px 7px;
-  min-width: 26px;
-  text-align: center;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: rgba(255,255,255,0.85);
+  flex-shrink: 0;
 }
 .sidebar-item.active .sidebar-item-count {
-  color: var(--text-inverse);
-  background: rgba(255,255,255,0.18);
+  color: var(--text-accent-on-dark);
+  opacity: 1;
 }
 
-/* Sidebar tooltips (shown when collapsed) */
+/* Sidebar / Footer tooltips — absolute, anchor right of the item */
 .sidebar-item .tooltip,
-.sf-item .tooltip {
+.sf-item .tooltip,
+.sidebar-user-btn .tooltip {
   position: absolute;
-  left: calc(100% + 8px);
+  left: 100%;
   top: 50%;
   transform: translateY(-50%);
-  background: var(--neutral-900);
-  color: #fff;
-  font-size: var(--font-size-xs);
+  margin-left: 8px;
+  background: white;
+  color: #323841;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
   white-space: nowrap;
-  padding: 4px 8px;
+  padding: 8px 14px;
   border-radius: 4px;
-  box-shadow: var(--shadow-tooltip);
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.15s;
+  box-shadow: 0 4px 8px 0 rgba(81,101,120,0.16), 0 1px 3px 0 rgba(60,78,98,0.08);
   z-index: 500;
 }
+.sidebar-item .tooltip::before,
+.sf-item .tooltip::before,
+.sidebar-user-btn .tooltip::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-right-color: white;
+}
 .sidebar.collapsed .sidebar-item:hover .tooltip,
-.sidebar.collapsed .sf-item:hover .tooltip { opacity: 1; }
+.sidebar.collapsed .sf-item:hover .tooltip,
+.sidebar.collapsed .sidebar-user-btn:hover .tooltip { opacity: 1; }
 
-/* Footer — fixed order: Help → User → Collapse */
+/* Footer */
 .sidebar-footer {
-  border-top: 1px solid var(--overlay-divider-dark);
-  padding: var(--space-2) 0;
+  margin-top: auto;
+  padding: 4px 0;
   flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  transition: box-shadow 0.15s;
+}
+.sidebar-footer.has-overflow-above {
+  box-shadow: 0 -6px 8px -2px rgba(0, 0, 0, 0.4);
 }
 .sf-item {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: 12px;
   padding: 4px 14px;
-  color: var(--text-inverse-muted);
-  font-size: var(--font-size-sm);
+  color: rgba(255,255,255,0.85);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-light);
   cursor: pointer;
-  transition: color 0.15s, background 0.15s;
-  position: relative;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
   text-decoration: none;
-}
-.sf-item:hover {
-  color: var(--text-inverse);
-  background: var(--overlay-hover-dark);
-}
-.sf-icon-wrap {
-  width: 16px;
-  text-align: center;
-  flex-shrink: 0;
-}
-.sf-avatar-img {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  overflow: hidden;
+  white-space: nowrap;
+  transition: background 0.15s;
+  font-family: var(--font-body);
   position: relative;
-  flex-shrink: 0;
+}
+.sf-item:hover { background: transparent; }
+.sf-item:hover .sf-icon-wrap { background: rgba(255,255,255,0.28); }
+.sf-item:hover .sf-avatar-img { border-color: rgba(255,255,255,0.75); }
+.sf-icon-wrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.15);
+  font-size: var(--font-size-base);
+  color: white;
+  position: relative;
+  transition: background 0.15s;
 }
-.sf-avatar-img img { width: 100%; height: 100%; object-fit: cover; }
-.sf-avatar-status {
+.sf-avatar-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  position: relative;
+}
+.sf-avatar-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.sf-status-dot {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 7px;
-  height: 7px;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
-  background: var(--green-500);
-  border: 1.5px solid var(--neutral-800);
+  background: #219d58;
+  border: 1.5px solid rgba(255,255,255,0.4);
 }
-.sf-text { font-size: var(--font-size-sm); }
+.sf-text { display: flex; flex-direction: column; }
 
-/* App shell layout */
-.app-shell {
-  padding-top: var(--topnav-height);
-  padding-left: var(--sidebar-width);
-  min-height: 100vh;
-  transition: padding-left 0.2s ease;
+/* ─── Collapsed state ───
+   Only horizontal metrics change. Vertical paddings, margins, and gaps
+   stay identical to expanded so the row heights don't shift on toggle. */
+.sidebar.collapsed { width: var(--sidebar-collapsed-width); }
+.sidebar.collapsed .sidebar-user-greeting { display: none; }
+.sidebar.collapsed .sidebar-user { padding: 14px 6px 12px; }
+.sidebar.collapsed .sidebar-user-btns { align-items: center; }
+.sidebar.collapsed .sidebar-user-btn {
+  justify-content: center;
+  gap: 0;
+  padding: 0;
 }
-.app-shell.sidebar-collapsed {
-  padding-left: var(--sidebar-collapsed-width);
+.sidebar.collapsed .sub-abbr { display: inline; }
+.sidebar.collapsed .sub-label,
+.sidebar.collapsed .sub-count { display: none; }
+.sidebar.collapsed .sidebar-item-label,
+.sidebar.collapsed .sidebar-item-count { display: none; }
+.sidebar.collapsed .sidebar-item {
+  justify-content: center;
+  padding: 10px 0;
+  margin: 3px 8px;
+  gap: 0;
+}
+.sidebar.collapsed .sidebar-item.active i { color: var(--text-accent-on-dark); }
+.sidebar.collapsed .sidebar-item i { width: auto; }
+/* Parents and link items keep their chevron visible in collapsed state */
+.sidebar.collapsed .sidebar-item--parent,
+.sidebar.collapsed .sidebar-item--link {
+  justify-content: center;
+  gap: 4px;
+}
+.sidebar.collapsed .sidebar-item-chevron {
+  margin-left: 0;
+}
+/* Children also need a tooltip in collapsed mode; they keep the same
+   icon-only treatment as everything else in the nav */
+.sidebar.collapsed .sidebar-item--child {
+  padding-left: 0;
+}
+/* Link nav item: suppress the small tooltip in collapsed — the popover
+   takes over as the substantive context */
+.sidebar.collapsed .sidebar-item--link .tooltip {
+  display: none;
+}
+.sidebar.collapsed .sf-item {
+  justify-content: center;
+  gap: 0;
+}
+.sidebar.collapsed .sf-text { display: none; }
+.sidebar.collapsed .sf-collapse-label { display: none; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Expansive variant — parents with nested children
+   ═══════════════════════════════════════════════════════════════════════ */
+.sidebar-group {
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-children {
+  display: none;
+  flex-direction: column;
+}
+.sidebar-group.is-expanded .sidebar-children { display: flex; }
+
+/* Chevron on parents with nested children */
+.sidebar-item .sidebar-item-chevron {
+  margin-left: auto;
+  width: auto;
+  height: auto;
+  font-size: var(--font-size-xs);
+  opacity: 0.55;
+  transition: transform 0.2s ease;
+}
+.sidebar-group.is-expanded .sidebar-item--parent .sidebar-item-chevron {
+  transform: rotate(180deg);
+}
+
+/* Child items: padding-left indents the child's icon past the parent's icon,
+   giving a subtle hierarchy. Children always carry an icon — required for
+   the collapsed state and useful as a visual marker when expanded. */
+.sidebar-item--child {
+  padding-left: 28px;
+}
+
+/* When a group's nested child is selected, the active child gets the
+   standard rounded active style (same as a top-level nav item). No
+   edge-to-edge group fill — keeps the rhythm consistent. */
+
+/* ─── Portal variant (matter portal context header) ─── */
+/* The header is a flex-shrink-0 block at the top of the sidebar so the
+   nav below it scrolls underneath. Typography uses two sizes only:
+   13px body and 10-11px uppercase labels. */
+.sidebar-portal-header {
+  flex-shrink: 0;
+}
+.portal-ribbon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* Top padding aligned with .sidebar-user / .sidebar-nav (14px)
+     so all three variants begin at the same height */
+  padding: 14px 12px 10px;
+}
+.portal-ribbon-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 5px;
+  background: rgba(255,255,255,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: var(--font-size-base);
+  flex-shrink: 0;
+}
+.portal-ribbon-label {
+  flex: 1;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: white;
+  line-height: var(--line-height-tight);
+  min-width: 0;
+}
+.portal-favorite {
+  background: transparent;
+  border: 0;
+  color: rgba(255,255,255,0.45);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+}
+.portal-favorite:hover { color: rgba(255,255,255,0.85); }
+/* Active/favourited: amber-500 from the tokens — solid gold star */
+.portal-favorite.is-active,
+.portal-favorite.is-active:hover { color: var(--amber-500); }
+.portal-title-block {
+  padding: 6px 12px 10px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.portal-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: white;
+  line-height: var(--line-height-tight);
+  margin-top: 6px;
+}
+.portal-id {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  color: var(--text-inverse-muted);
+  margin-top: 2px;
+}
+.portal-meta { padding: 0 12px; }
+.portal-meta-row {
+  padding: 10px 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.portal-meta-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.5);
+}
+.portal-meta-value {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  color: white;
+  margin-top: 2px;
+}
+/* Portal active item uses the standard sidebar-item active styling — same
+   as the Default variant (rounded fill, blue text/icon, no right-edge). */
+/* Portal expanded: hairline + breathing room separating header from nav.
+   Collapsed: kill both so the ribbon icon sits tight against the first item. */
+.sidebar--portal .sidebar-nav {
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.sidebar--portal.collapsed .sidebar-nav {
+  padding-top: 0;
+  border-top: 0;
+}
+/* When portal sidebar collapses, hide the case info, keep just the ribbon icon */
+.sidebar.collapsed .portal-title-block,
+.sidebar.collapsed .portal-meta { display: none; }
+.sidebar.collapsed .portal-ribbon {
+  /* Same 14px top across all variants in collapsed state.
+     padding-bottom kept tight (4px) so the briefcase sits close to the first nav item */
+  padding: 14px 6px 4px;
+  justify-content: center;
+}
+.sidebar.collapsed .portal-ribbon-label,
+.sidebar.collapsed .portal-favorite { display: none; }
+
+/* ─── Link nav item (flyout popover with external links) ─── */
+.sidebar-link-group { position: relative; }
+.sidebar-link-group.is-open .sidebar-item--link {
+  background: rgba(255,255,255,0.07);
+  color: #ffffff;
+}
+.sidebar-link-popover {
+  position: fixed;
+  min-width: 200px;
+  background: #323841;
+  border-radius: 6px;
+  padding: 6px 0;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 1px 3px rgba(0,0,0,0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+  z-index: 600;
+}
+.sidebar-link-group.is-open .sidebar-link-popover {
+  opacity: 1;
+  pointer-events: auto;
+}
+.popover-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+}
+.popover-link:hover {
+  background: rgba(255,255,255,0.08);
+  color: #ffffff;
+}
+.popover-link-label { flex: 1; }
+.popover-link .fa-external-link-alt {
+  font-size: var(--font-size-xs);
+  opacity: 0.55;
+  flex-shrink: 0;
+}
+
+/* ─── Sidebar — Modeller variant ─── */
+/* Reuses Expansive nested-nav patterns. Header is its own pattern:
+   a single-row big-title block, no meta rows. Footer replaces
+   profile with a non-interactive version badge. */
+.sidebar-modeller-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--overlay-divider-dark);
+  flex-shrink: 0;
+}
+.modeller-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: var(--text-inverse);
+  font-size: var(--font-size-sm);
+  flex-shrink: 0;
+}
+.modeller-name {
+  font-family: var(--font-body);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-inverse);
+  letter-spacing: -0.1px;
+  line-height: var(--line-height-tight);
+}
+.modeller-version {
+  margin-left: auto;
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--text-inverse-muted);
+  line-height: var(--line-height-tight);
+}
+/* Collapsed-state: just the mark, centered, label + version hidden */
+.sidebar.collapsed .sidebar-modeller-header {
+  padding: 12px 0;
+  justify-content: center;
+}
+.sidebar.collapsed .modeller-name,
+.sidebar.collapsed .modeller-version { display: none; }
+
+/* Scroll-conditional shadow above the modeller footer — only visible when the
+   nav has overflow content scrolling behind it. JS toggles .has-footer-shadow. */
+.sidebar--modeller .sidebar-nav {
+  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.sidebar--modeller .sidebar-footer {
+  position: relative;
+  transition: box-shadow 0.15s ease;
+}
+.sidebar--modeller.has-footer-shadow .sidebar-footer {
+  box-shadow: 0 -8px 12px -8px rgba(0, 0, 0, 0.5);
+}
+
+/* Non-interactive version badge in the footer (replaces profile slot) */
+.sf-item--version { cursor: default; }
+.sf-item--version:hover { background: transparent; }
+.sf-item--version:hover .sf-icon-wrap { background: var(--overlay-hover-dark); }
+.sf-item--version .sf-text {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--text-inverse-soft);
 }
